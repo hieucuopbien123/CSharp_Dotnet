@@ -1,0 +1,146 @@
+.NET nói chung là 1 nền tảng free open source xây dựng đủ loại ứng dụng trên nhiều loại thiết bị cho nhiều hệ điều hành. Nó cung tools, thư viện, môi trường code tương thích nhiều ngôn ngữ. 
+NodeJS cũng tương tự là 1 nền tảng chứ kp 1 ngôn ngữ lập trình nhưng quy mô nhỏ hơn rất nhiều so với .NET vì nó chỉ hỗ trợ JS. Khi lập trình .NET, tùy loại ứng dụng ta muốn tạo trên hệ điều hành nào mà dùng được 1 số ngôn ngữ khác nhau, có tổng hơn 70 ngôn ngữ lận, bao gồm cả: Visual Basic, C#, F#, JS.
+Do đó khi lập trình .NET, cần hiểu đang lập trình ứng dụng gì, cho loại thiết bị và hệ điều hành nào (có thể cross-platform) và cần chú ý các công cụ nào từ .NET mà ta đang sử dụng. 1 loại ứng dụng có thể có nhiều công cụ hỗ trợ.
+Tất cả các sản phẩm liên quan tới .NET đều là do microsoft phát triển.
+Khi nền tảng như Azure hay engine như Unity dùng .NET hay hỗ trợ .NET thì có thể coi là nó có sử dụng các Framework hoặc Lib của .NET để xây dựng ứng dụng.
+.NET bao gồm thành phần CLR và các thư viện (các tool khác đi kèm)
+
+C# là 1 ngôn ngữ phát triển bởi microsoft. Ta có thể coi nó tương đương với các ngôn ngữ như Java hay C++. Các ngôn ngữ đó tạo được gì thì C# cũng làm được 1 cách độc lập. Nó OOP rất mạnh nên k có biến hay hàm toàn cục
+Mặc dù khi microsoft cho ra đời C# được giới thiệu kèm .NET framework để lấy nó làm ngôn ngữ chính code trên platform .NET nhưng nó vẫn là 1 ngôn ngữ độc lập và có thể compile without .NET. Tuy nhiên, người ta thường dùng C# để code kèm với .NET thì sẽ tận dụng được nhiều công cụ của .NET mang lại. Cũng tương tự như code JS nhưng k dùng NodeJS(gồm npm) vậy, tất cả đều phải làm thuần thì dù chạy được nhưng ít dùng.
+
+.NET và C# độc lập với microsoft. Ta có thể dùng nó để code các ứng dụng tùy ý thích cho các doanh nghiệp hay cá nhân không liên quan tới microsoft. Ta cũng có thể dùng để code các ứng dụng của microsoft như các ứng dụng của hệ điều hành, ad-ons cho sharepoint hay microsoft teams và nó sẽ được tối ưu cho mục đích đó.
+Cả C# và dotnet đều có đầy đủ docs trên trang chủ của microsoft. C# và .NET nên là lựa chọn hàng đầu khi chọn 1 ngôn ngữ hướng đối tượng để xây ứng dụng vì nó mạnh ngang nodejs do có bộ Nuget giống hệt npm và xây được đủ loại ứng dụng hiện có.
+.NET là môi trường có thể xây nhiều loại ứng dụng như web, winform, mobile, console app, window services, hỗ trợ nhiều thiết bị, nhiều hệ điều hành, đặc biệt là cloud app. Do microsoft định hướng đi đa nền tảng từ 2013 cho .NET nên nó mới mở rộng như v.
+
+Platform: hardware / architecture (x86 vs x64) / operating system
+Framework: software / libraries / scaffolding
+Library: Function, Class, Utility
+=> Có thể coi framework là bộ thư viện cung hàm sẵn ra để gọi
+
+.NET Framework là 1 phần của .NET, framework này là khởi nguồn của .NET implementation. Nó gồm bộ thư viện rất lớn chứa nhiều công cụ giải quyết hầu hết các vấn đề thg gặp trong phát triển ứng dụng. 
+.NET Framework chỉ dùng với máy cài window và phải cài cả .NET Framework. Nó tương thích với nhiều phần cứng, hỗ trợ nhiều loại ngôn ngữ như C++, C#, VB,... Ngoài ra có 1 số ngôn ngữ khác không do microsoft phát triển cũng thiết kế để dùng trên .NET như IconPython(phiên bản khác của python dịch sang .NET framework), oxygence,.. Có nhiều ngôn ngữ khác nhau nhưng dễ nhầm như Visual Basic.NET, Visual C++.NET, F#, Visual C#. Tức là 1 chương trình viết bằng các ngôn ngữ khác nhau đều dùng được các hàm của .NET Framework. Các chương trình .NET framework cũng có thể dùng nhiều bộ công cụ từ các ngôn ngữ .NET khác, VD 1 người code ứng dụng C# có thể sử dụng thư viện do người khác code bằng Visual Basic.
+
+.NET Framework ra đời vào 2002 và kết thúc phát triển vào 2019 ở phiên bản 4.8
+.NET Core ra đời vào 2014 và có thể coi là phiên bản mới của .NET Framework. Nó có thể chạy đa nền tảng và ứng dụng vào các thiết bị hiện đại. Thực tế bộ code của Core được build lại hoàn toàn nên nhẹ, nhanh, dễ dùng hơn. Core dù được coi là phiên bản mới của .NET Framework nhưng thực tế vẫn có nhiều thứ .NET Framework có mà Core không có nên vẫn có thể dùng .NET Framework tùy loại dự án. Có nhiều cách cố gắng kết hợp 2 framework lại cùng 1 solution nhưng k nền làm v.
+Sang 2020, .NET Core cũng ngừng phát triển và dừng ở v3.
+
+.NET Standard không phải là 1 phiên bản mà chỉ là 1 đặc tả kỹ thuật về những kiểu dữ liệu chung mà .NET thực thi. Nó như kiểu 1 cái interface nói rằng với framework này, bạn có thể làm gì, còn các thứ như .NET Core, .NET Framework, Mono là các kiểu implementation khác nhau cho nó. Nhờ có nó mà việc chia sẻ thư viện của .NET Core và .NET Framework đơn giản hơn
+
+.NET Framework dừng ở v4, .NET Core dừng ở v3. Năm 2020, .NET 5 ra đời và giờ đã có tới .NET 7 và vẫn đang tiếp tục phát triển mỗi năm 1 phiên bản mới. Nó là phiên bản hợp nhất .NET Core và .NET Framework, nó k còn biệt danh đi kèm để tránh nhầm lẫn. Và nếu người dùng nói về lập trình .NET, họ đang nói tới dùng các phiên bản chuẩn này.
+Dù là bản hợp nhất, nhưng .NET 5 vẫn tuân theo .NET Standard nên họ quyết định 1 vài tính năng của .NET Framework sẽ k có trong .NET 5, tức là dev phải tự implement thuần. Do đó vẫn nhiều dự án mới ra đời mà họ vẫn thích dùng Core hoặc Framework cho stable chứ k dùng phiên bản mới, tùy vào đặc tính của dự án. 
+
+.NET Foundation là 1 tổ chức thành lập năm 2014 bởi microsfot để cải thiện sự hợp tác và phát triển phần mềm nguồn mở bằng .NET Framework. Họ lo về các loại giấy phép các thứ.
+
+Mono cũng là 1 framework phát triển song song với .NET Framework vì khi .NET Framework ra đời thì nó chỉ hoạt động trong phạm vi nhỏ hẹp. Họ đã họp lại và phát triển dự án Mono mã nguồn mở để chạy được tương tự .NET Framework nhưng trên nhiều hệ điều hành. Nó mạnh tới nỗi chạy được trên win, linux, macOS, solaris, thậm chí cả playstation 3, Wii và Xbox360.
+Về sau Xamarin mua lại hoàn toàn mono và nắm thế độc quyền .NET dành cho hđh iOS và Android. 
+
+=> Kết luận:
+.NET Framework thg dùng phát triển winform app
+Mono phù hợp với phát triển game Unity hay các ứng dụng mobile Xamarin. Nó đặc biệt k phù hợp để dựng web server vì sẽ bị quá tải do bộ dọn rác của nền tảng này k được thiết kế để chạy web server
+Còn .NET Core hay .NET Framework đều phù hợp để dựng web server. Dễ thấy .NET Core hiệu năng cao hơn nhưng .NET Framework sẽ có nhiều thư viện hỗ trợ hơn vì .NET Framework được phát triển gần 20 năm nên hiệu năng đương nhiên k tốt bằng các Framework mới nhưng số lượng thư viện của nó thì cực kỳ nhiều. Dễ thấy .NET chung cho hiệu năng đương nhiên là cao nhất nhưng số lượng thư viện vẫn ít hơn .NET Framework thôi. 
+
+Quan hệ với Unity: Unity là 1 game engine được viết bằng C# và có sử dụng .NET ngay từ đầu với mục đích để nó chạy được trên nhiều hardware config. Nó vẫn tiếp tục phát triển để dùng các phiên bản .NET cao hơn khi microsoft phát triển. Từ đó tăng hiệu năng và dùng được nhiều tính năng hơn.
+
+Biên dịch và thực thi trong .NET framework: 
+C#, VB.NET,... ---compilers---> Mã CIL ---CLR---> Mã máy
+=> Mã nguồn viết từ nhiều ngôn ngữ trong .NET -> các trình biên dịch tương ứng từng ngôn ngữ sẽ biên dịch thành 1 tệp mã đặc biệt là CIL(Common Intermediate Language) (cũng được gọi là bytecode) là quá trình compile time -> CIL là ngôn ngữ trung gian đặc biệt, tiền thân là MSIL(Microsoft Intermediate Language) cũng là 1 ngôn ngữ lập trình - là ngôn ngữ cấp thấp nhất mà dev vẫn có thể đọc hiểu được code -> Trong run time, 1 chương trình JIT compiler đọc và dịch tiếp CIL thành mã máy để thực thi, quá trình này lại được kiểm soát bởi 1 chương trình đặc biệt là CLR(Common Language Runtime) -> Cả CLR và CIL là 1 phần của hệ thống tổng thể CLI(Common Language Intermediate) 
+=> Đây là kiểu hybrid lai giữa interpreter và compiler khi mà compiler chuyển sang CIL có vai trò tăng tốc cho JIT compiler về sau và hợp nhất code mọi ngôn ngữ thành CIL. Nhờ v 1 project Visual Basic.NET có thể truy xuất code viết trên C# được. 
+
+*Các cái .NET Framework, .NET Core, .NET chung, Mono bên trên là phần quan trọng thg dùng nhất khi sử dụng .NET platform. Trong thực tế, nó cũng chỉ là 1 phần của .NET, còn rất nhiều các framework khác của .NET hoạt động độc lập để dùng cho nhiều loại dự án hoặc mục đích khác nhau. Vd ta có thể dùng .NET Framework bất kể xây dựng cloud app hay web app hay window services cũng được nhưng như v sẽ rất khó. 
+.NET có rất nhiều framework để sử dụng khi chọn dự án: https://learn.microsoft.com/en-us/dotnet/
+Các framework khác của .NET có thể được xây mới hoàn toàn or sử dụng kèm .NET Framework hoặc .NET Core để xây lên. Khi đó ta có thể dùng hàm các thư viện đó thoải mái. Mỗi framework lại chia thành nhiều phiên bản khác nhau
+
+Orleans là cross-platform framework dùng build ứng dụng dựa trên .NET Framework dạng cloud-native
+ASP.NET là framework chuyên dùng để xây web app
+Entity Framework hay NHibernate là framework chuyên dùng để xây tương tác với database
+ML.NET là framework chuyên dùng cho machine learning
+.NET Framework rất phù hợp xây console app thuần or window services
+
+Bên cạnh đó có nhiều lib trong bộ 3 framework .NET Universal, .NET Framework, .NET Core cung các chức năng rất mạnh như: System.Xml, LINQ, Thread, Parallel,...
+
+Khi biết rõ loại dự án và ta chọn dùng 1 framework để dùng trong dự án, việc dùng kết hợp các framework trong .NET k hề đơn giản. Thông thường việc kết hợp sẽ ok nếu như k có xung đột, ví dụ dùng ASP.NET Core để xây web app SSR và dùng Entity Framework để connect với database rất ok. Nhưng nếu dùng kết hợp xung đột kiểu ASP.NET Core kèm với ASP.NET Web Forms thì k ổn. VD dùng .NET Framework kèm .NET Core cũng k ổn. 
+Dự án ta dùng vài framework thì ta chỉ có thể dùng được code C# thuần và các lib có trong các framework đó mà thôi. Đôi khi có thể import các lib từ bên ngoài dạng dll vào dự án cũng được. 
+=> List các framework: https://en.wikipedia.org/wiki/List_of_.NET_libraries_and_frameworks
+
+Trong .NET còn có các bộ SDK, các bộ này tùy loại mà có thể import vào dự án tự do. Chúng cung cấp thêm rất nhiều lib mạnh để dùng như: Azure SDK for .NET,...
+
+Visual Studio là tool chuyên code C# .NET. Ứng với các framework khác nhau, nó có nhiều template khác nhau có thể chọn sẵn để xây ứng dụng. VD template tích hợp sẵn ASP.NET Core với React chẳng hạn. Trong installer của VS có vô số bộ công cụ .NET muốn tích hợp vào VS, phải cài mới dùng được.
+
+*ASP
+ASP (Active Server Page) là giải pháp của microsoft để render nội dung động cho các trang web. Kiểu trang html có 1 or nhiều tập lệnh được server microsoft xử lý trước r mới gửi đến người dùng. 
+
+Ngày nay công nghệ này được dùng để xây dựng web page. Nó có nhiều development model khác nhau:
+Classic ASP hay ASP: Được giới thiệu năm 1996 là engine hay scripting language đều tiên server-side của microsoft để xây web động. Đuôi .asp
+ASP.NET là 1 framework lần đầu tiên ra mắt vào 2002 thay thế cho Classic ASP. Đuôi là .aspx và được viết bằng C# luôn. Nó được đưa ra thị trường cùng với phiên bản 1.0 của .NET Framework thời đó. Nó cũng được biên dịch dưới dạng CLR.
+Phiên bản mới nhất là ASP.NET 5 và ngừng phát triển. Giờ nó bị thay thế bởi ASP.NET Core
+
+ASP.NET Web Pages: là 1 SPA app model dùng để xây ứng dụng web SPA. Nó khá giống PHP và Classic ASP
+
+ASP.NET MVC: xây web app nhưng lại theo dạng chuẩn MVC model
+
+ASP.NET Web API: tương tự nhưng theo hướng API model
+
+ASP.NET Web Forms: tương tự nhưng theo kiểu event-driven app model. Nó có trên .NET Framework nhưng k có trên .NET Universal. Hiện tại người ta bỏ cái này rồi, không khuyến khích dùng. Hiện tại nó đã có đến phiên bản 4.5 nhưng cũng chỉ trong cho VS 2013 thôi.
+
+=> Có thể thấy cùng là làm web nhưng lại có nhiều framework chỉ để phục vụ xây app từng mô hình khác nhau
+
+ASP.NET Core ra đời vào 2016 đã merge lại ASP.NET MVC, ASP.NET Web API, ASP.NET Web Pages thành 1 framework duy nhất. Đây là cái nên sử dụng và thường được sử dụng nhất để xây ứng dụng web. Khi sử dụng framework này, ta sẽ thấy có thể import mọi thư viện của 3 loại framework trên thoải mái.
+
+Có thể tạo nhiều loại app window rất lạ chưa nghe bh:
+WPF: Window Presentation Foundation app
+WF: Workflow-enabled apps dùng Windows Workflow Foundation
+WCF: Server-oriented apps dùng Window Communication Foundation
+UWP: Universal Windows Platform apps là ứng dụng dùng được qua mọi thiết bị tương thích với microsoft window
+=> Mỗi loại app này đều có docs riêng
+
+ADO.NET thực ra kp là 1 framework mà chỉ là 1 công nghệ dùng để access vào data source như SQL Server hay XML, nó là 1 phần nhỏ của .NET Framework thôi. Có thể coi là 1 lib trong .NET Framework cũng được.
+
+So sánh ADO.NET và Entity Framework:
+- ADO.NET: nằm trong .NET Framework
+Tạo direct connection tới database, nhanh hơn Entity Framework nhưng k đáng kể.
+- Entity Framework: 
+Là 1 ORM framework độc lập. Cơ chế tạo ra 1 object relational mapping bao ADO.NET architecture. K tạo direct connection mà sẽ tự auto translate LINQ query thành raw SQL nên lâu hơn. 
+Entity Framework luôn tạo class cho data model và context trong khi ADO.NET cung complete control với data access layer nên có thể tạo class và method từ scratch
+
+Quan hệ với Azure: 
+1 nền tảng hay ứng dụng cloud khác với 1 ứng dụng bth là nó có sử dụng cloud hoặc ứng dụng cloud để cung cấp dịch vụ cho người dùng. VD GG drive nó dùng cloud để tạo ra bộ nhớ cực lớn, xây thành 1 ứng dụng web cho người dùng sử dụng.
+Microsoft Azure hay Azure là 1 cloud computing platform. Tức nó là 1 nền tảng cung cấp các công cụ để quản lý và phát triển ứng dụng thông qua 1 data center cloud. Nó cung cấp đủ loại SaaS, PaaS và IaaS. Nó hỗ trợ nhiều ngôn ngữ khác nhau như Python, JS, Java, .NET và Go. Nó hỗ trợ .NET tức có thể dùng các framework của .NET khi code trên Azure platform.
+Azure có nhiều công cụ tích hợp từ mobile DevOps đến serverless computing, là 1 nền tảng cloud có thể nói là tốt nhất, an toàn do được phát triển từ microsoft và cũng là nền tảng đầu tiên được phát triển khi microsoft giới thiệu về điện toán đám mây.
+
+So sánh .NET với NodeJS: 
+NodeJS bị giới hạn trong 1 số ứng dụng web, tập lệnh, trình dịch,... trong khi .NET dùng cho nhiều loại ứng dụng nhiều nền tảng hơn. 
+Nên dùng NodeJS với ứng dụng lightweight, realtime, chat app api. Còn .NET nên dùng với các ứng dụng quy mô lớn về game, web, IoT, desktop app, cloud based solutions.
+
+Có nhiều thư viện của .NET giúp lập trình trên các nền tảng sharepoint hay teams. Nó là 1 mảng rất lớn. Có nhiều thư viện .NET để làm với nó:
+CSOM: Client Sharepoint Object Model nếu nói về sharepoint. Model này được dùng để thao tác với data trong sharepoint. 
+Microsoft cung rất nhiều loại client object models chứ k chỉ CSOM: JSOM(JS object model), Sharepoint Rest API, Sharepoint.NET client object model.
+
+SPFx(Sharepoint Framework): là 1 framework của .NET giúp code react tạo ra các component webpart dùng trong sharepoint hay microsoft team.
+
+PnP Rest API: Là 1 thư viện giúp fetch API tương tác với sharpoint. VD lấy thông tin các list trong 1 site của sharepoint,... 
+Nó gồm: PnPjs/graph tương tác cả Microsoft Graph thì lấy được thông tin qua API ở phạm vi rất rộng bao gồm cả microsoft team và các thành phần hệ thống; PnP/sp nhỏ hơn là lib chỉ lấy API của sharepoint
+
+Các tool provisioning cho sharepoint theo thứ tự ra đời:
+Đầu tiên là PnP Core CSOM (hay Sharepoint CSOM) có sẵn: Thư viện các hàm giúp thao tác với sharepoint như connect site, CRUD list, publish, Tạo list. Nó được phát triển bởi Microsoft khi phát triển sharepoint mà.
+Các tool provisioning về sau phát triển đều là từ community open source nên publish trên github. Nó được phát triển từ cái gốc Sharepoint CSOM và bh toàn dùng các tool mới cho tiện chứ k dùng CSOM gốc.
+
+PnP Provisioning engine: Provisioning engine tức là 1 công cụ provision(cung cấp) cho Office 365 và sharepoint online collection. Tức ta viết ứng dụng bằng công cụ này để cung cấp bất cứ thứ gì cho sharepoint chẳng hạn. VD ta có thể cung data cho sharepoint bằng cách tạo 1 list data hay publish 1 page mới trên site thoải mái. PnP Provisioning Engine được tạo bởi Sharepoint Developer Community và k được support bởi microsoft. Thực tế nó kp là 1 thư viện độc lập mà là 1 engine có trong các tool bên dưới.
+
+PnP Site Core: Là 1 library phát triển bởi Microsoft 365 Platform Community của dotnet làm việc với sharepoint nên nó chứa cả PnP Provisioning Engine và nhiều thứ khác (PnP PE thực chất ra đời từ lúc này lần đầu tiên khi nó nằm trong PnP Site Core). Sharepoint CSOM được phát triển bởi microsfot là bản gốc, thư viện này được community cho ra đời đầu tiên và được build dựa vào model là Sharepoint CSOM. Nó cung mọi thứ như PnP Core CSOM tức ta có thể dùng tạo list, page cho sharepoint ok.
+Khi mở rộng nó trở nên quá lớn và phức tạp, khó maintain. Hiện nó đã bị archived và thay thế bằng PnP Core SDK.
+github: pnp/PnP-Site-Core
+
+OfficeDevPnP.Core là tên thư viện của PnP Site Core. PnP Provisioning engine là 1 phần của nó mà thôi. 
+
+PnP Core SDK ra đời với chức năng giống PnP Site Core nhưng code tối ưu hơn. Nó là 1 SDK .NET để làm việc cho Microsoft 365(ban đầu chỉ làm với sharepoint và team). Nhưng sự migration này phải diễn ra từ từ nên phiên bản PnP Site Core archived dừng ở v3. PnP Core SDK hay gọi là PnP Core phát triển liên tục sau mỗi năm:
+PnP Core SDK preview -> PnP Core SDK beta1 -> PnP Core SDK beta2 -> PnP Core GA(v1.0.0)
+Github: pnp/pnpcore
+
+Nhưng thực tế, nó k code trực tiếp PnP Core SDK cho giống với PnP Site Core luôn mà cho ra đời sp trung gian là PnP Provisioning Framework:
+Họ tạo ra .NET Standard 2.0 dùng tối ưu cho PnP Core SDK rồi release từng phiên bản PnP Framework dùng tiêu chuẩn .NET Standard 2.0 này và phát triển theo PnP Site Core v3. Các phiên bản PnP Framework sau khi đạt tiêu chuẩn sẽ merge vào PnP Core SDk. Tức PnP Core và PnP Framework sẽ liên tục có các version mới sau mỗi năm:
+PnP Framework preview -> PnP Framework GA -> PnP Site Core vx (Tên là v nhưng cx chỉ là 1 version của PnP Framework vào năm 2021)
+github: pnp/pnpframework
+
+=> Như v ta có thể dùng bản gốc PnP Site Core của community hoặc bản mới PnP Core SDK đều được. Ít khi dùng bản gốc PnP Core CSOM của microsoft or bản trung gian là PnP Framework. PnP Core SDK được phát triển từ PnP Site Core nên có thể chưa hỗ trợ được tất cả nhưng dùng sẽ stable. Nếu sau này muốn migrate sang PnP Core SDK rất dễ vì code giống nhau.
+
+

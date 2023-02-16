@@ -1,0 +1,89 @@
+ASP.NET Core:
+
+
+
+# Basic
+=> ref tới mục "Tài liệu" có logger, useSwagger các thứ
+=> ref tới "Avepoint / homework / Bài 11" là dự án đầy đủ ở mức custom của ASP.NET có DB
+
+Giống .NET core nhưng chỉ dùng cho web app. Là open source web framework for building cloud-based app
+
+Trên Linux, chi phí dùng cho việc phát triển và bảo trì rẻ hơn trên window. Do đó ta thg build server trên linux, chỉ các TH cần thiết khác mới dùng window server
+
+ASP.NET Core là 1 framework mới độc lập với các phiên bản ASP.NET 4.x Framework. Nó nhỏ hơn và nhiều module hơn, code sử dụng chuẩn mô hình MVC. Ta mặc định dùng ASP.NET Core
+.NET Core chỉ dùng cho window nhưng ASP.NET Core dùng cho nhiều loại. Khi code phải tránh dùng 1 số API đặc biệt ASP.NET Core vì có 1 số chỉ hoạt động trên window server vì chúng gọi win32 API
+
+-> Dependency injection(tạo ra các dịch vụ gọi là Services lifetimes): Đăng ký dịch vụ và sử dụng dịch vụ. Các dịch vụ được đk trong Startup.cs
+=> ref tới "# Dependency Injection"
+
+-> Cài đặt
+Phải cài feature ASP.NET Core cho VS
+Dùng ASP.NET Core Web App dùng cho C# Linux Window or dùng với React template
+
+-> Khi chạy, merge or tắt tab browser sẽ dừng ct
+Client và back chạy cùng 1 cổng, nếu back k code router "/" thì sẽ chạy vào client
+Cấu trúc thư mục và file chỉ để dễ nhìn. Còn bên trong, nếu 2 class cùng namespace thì class này có thể gọi được class kia trực tiếp mà k cần phải cùng thư mục hay gì
+
+-> Các thông tin config như biến môi trường azure key vault, commandline arg,... nhét vào 1 file json r lấy ra như bth thôi => tất cả các thông tin config đều nên nhét vào 1 file riêng r lấy ra chứ k hardcode
+Thông tin Azure Key Vault là từ Azure Microsoft services - 1 dịch vụ cloud cho hosting của microsoft.
+
+-> ref tới "Avepoint / homework / Bài 10":
+Gửi ảnh theo 3 cách khác nhau: base64, file static, url string, url sharepoint
+Add vào list cũng dùng các cách khác nhau
+wwwroot nhét ảnh vào tự là server ảnh khi chạy ứng dụng 
+
+
+
+# Dùng Logger:
+=> ref tới "slide ASP.NETCore"
+
+Trong launchSettings.json chứa config chạy dự án. Bth ta chạy k có console vì ta chỉ chạy mỗi trên browser. Nếu chọn sang mục thứ 2 là config chạy vừa console và browser sẽ thấy console. Tùy việc chọn profiles nào mà chạy kiểu tương ứng
+Trong đó, applicationUrl có 2 url cho https và http. Khi chạy theo kiểu thấy console, ta sẽ thấy logger hoạt động
+
+Logger thực tế được set up sẵn trong CreateDefaulBuilder gọi từ hàm Main. Tức nó được cài sẵn như 1 DI và dùng chỉ cần cho vào hàm khởi tạo như mẫu
+Xem thẳng source của CreateDefaultBuilder sẽ thấy có rất nhiều DI khác cũng được cài, trong đó có Microsoft.Extensions.Logging và tự động log sẵn ra các event của microsoft
+Thực tế trong phần output khi chạy cũng có logger in ra
+
+--> Có nhiều logging provider trong máy: Console, Debug (dùng System.Diagnostics.Debug), EventSource viết vào 1 cross platform event source, EventLog (dùng window event log ghi ra file) và nhiều third party provider trong github
+Khi có Ct bị hỏng hay phần cứng hỏng, check Window event log file có thể ra được lỗi.
+
+
+
+# Dùng Swagger
+Swagger(OpenAPI) là 1 language agnostic specification để mô tả REST APIs. Backend dùng nó để cung API cho front, giống POSTMAN
+
+-> Trong C#, cú pháp của API dùng data annotation rất chuẩn nên dùng tool tự sinh docs luôn chứ kp làm thủ công như bên JS
+
+
+
+# Middleware và pipeline
+Giống NodeJS Server
+
+-> Dùng routing
+-> Dùng static file
+
+
+
+# Other
+-> Đổi mới trong ASP.NET lên .NET6:
+https://xuanthulab.net/top-level-statement-trong-lap-trinh-c-net-6.html
+=> Chưa dùng .NET6 nên chưa cần
+
+-> IIS
+IIS(Internet Information Services) là máy chủ web phổ biến thứ 4 trên thế giới, sau apache, nginx, cloudflare server, được microsoft phát triển, chạy trên window. Nó được sử dụng để cung cấp nội dung trang web tới người dùng cuối, phục vụ cả trang html chuẩn, web động như các ứng dụng ASP.NET và các trang PHP
+
+-> WebServer có 2 loại:
+--> InProcess Hosting Model có web server IIS or IIS Express. Các web app được deploy trên đó. 
+Nó host app ở bên trong IIS worker process. Do đó khi vào task manager trong môi trường window server sẽ thấy có nhiều process khác nhau cho IIS vì nó host nhiều app khác bên trong. Mỗi app chỉ được host trong 1 process thôi
+InProcess hosting model truyền tải lượng request lớn hơn đi qua so với OutOfProcess hosting model.
+
+Internet <---HTTP---> [ASP.NET Core App: [IIS]<---HttpContext--->[Application code]]
+
+--> OutOfProcess Hosting Model:
+Server có thể là Kestrel nhưng đi kèm với Reverse Proxy Server như IIS, Apache or Nginx.
+Kestrel là 1 cross platform webserver, có thể chạy trên linux or window ok, built-in for ASP.NET.
+Dùng kèm Reverse proxy server là để cung thêm 1 lớp config và bảo mật
+
+Internet <---HTTP---> Reverse proxy server[IIS, Nginx, Apache] <---HTTP---> [ASP.NET Core App: [Kestrel]<---HttpContext--->[Application code]]
+
+

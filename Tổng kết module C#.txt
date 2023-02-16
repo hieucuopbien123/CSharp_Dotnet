@@ -1,0 +1,629 @@
+C#:
+Mặc định dùng VS. Installer cài:
+.NET desktop development mặc định dùng .NET Core
+Cài ASP.NET and web development
+Cài Office/Sharepoint development
+
+Ta có thể cài các phiên bản cao hơn của .NET từ trang chủ: https://dotnet.microsoft.com/en-us/download
+Vì cài trên installer cho các phiên bản mặc định có thể kp là cái mong muốn
+
+Có thể cài các package thêm trên NuGet cho từng dự án hay cả solution. Chọn đúng version tương ứng với .NET đang dùng. Xem trước được các package con khi cài.
+
+
+
+# Basic
+Các cú pháp bth giống java
+
+-> Command line:
+dotnet --version
+
+Khi dùng VSC, ta có thể tạo 1 dự án console mới bằng "dotnet new console" nhưng dự án này không dùng cho VS được vì VS nó config dự án chỉ dùng riêng được bằng tool VS với file solution .sln 
+Thực tế 1 project C# chỉ cần file .cs là được còn các file config là tùy tool. Ta chỉ xét VS.
+1 ứng dụng C# Core đơn giản có thể chạy trên cả win, linux, macOS nếu nó có cài đặt .NET Core
+
+Console App bth cũng tự dùng được .NET Core rồi
+
+-> Comment:
+Comment kiểu XML hỗ trợ sinh docs cho C# => khi hover vào hàm sẽ hiện thông tin, ấn ctrl + space sẽ gợi ý docs
+
+-> File .csproj: 
+Chứa config, VD TargetFramework chứa bản đích compile là bản nào
+
+-> Config VS: 
+Chỉnh phím tắt: Tool -> Options -> Keyboard
+
+-> Dùng System.Console
+
+-> Dùng mảng
+Dùng loop
+
+Mảng nhiều chiều, mảng trong mảng: https://xuanthulab.net/mang-trong-lap-trinh-c-sharp.html
+
+-> Dùng random
+
+-> Keyword readonly: 
+Nó khác với biến const là nó k cần khởi tạo giá trị ngay từ đầu mà có thể gán trong constructor chẳng hạn.
+
+-> Dùng yield:
+Dùng yield return trong 1 function, nó sẽ nhét giá trị yield return đó vào 1 enumerable rồi trả ra enumerable đó. Còn có yield break. 
+Coi hàm số là 1 Enumerable luôn.
+
+-> Wrapper Class:
+Trong java k có WrapperClass, string là alias for String mà thôi
+
+
+
+# Dùng class library
+-> Tạo dự án Class Libraries với .NET Core:
+Chỉnh config trong .csproj, nếu chia sẻ lên NuGet thì phần PackageId phải đặt 1 tên duy nhất không trùng packages đã có.
+Tạo các class bth, k cần hàm main -> Window sẽ build ra DLL 
+
+Tham chiếu từ dự án khác: Chuột phải -> Add -> Project References -> chọn Project lib -> using <tên lib>;
+Trong file csproj của lib sẽ thêm tag PackageReference chỉ project nào đang dùng lib này.
+
+Chia sẻ lên NuGet cần API key: https://xuanthulab.net/tao-thu-vien-c-net-core-va-chia-se-len-nuget-org.html
+
+-> Để ref tới hàm 1 thư viện tạo ở solution khác thì phải build ra file dll và add file dll đó vào thư mục debug/release dự án hiện tại -> add reference -> Browser -> tìm tới file dll rồi add vào là xong
+
+
+
+# Dùng linq
+Thư viện giúp thao tác vơi mảng
+
+-> Với mảng thuần, phải có nó mới dùng được Max, Min, Sum
+
+
+
+# Biến và kiểu dữ liệu
+Mọi type đều kế thừa kiểu object
+Khai báo kiểu có sẵn byte, short, char (value type) sẽ được gán bộ nhớ ngay theo context
+Khai báo kiêu class, object, string (reference type) thì biến chứa giá trị null cho đến khi gán = cho nó
+Kiểu object là kiểu tương ứng với bất cứ type nào, default value của nó là null. VD: public void a(object c){ }
+
+-> Dùng Convert: Lớp Convert hỗ trợ convert qua lại giữa các kiểu dữ liệu
+
+-> Dùng mảng 2 chiều
+
+-> Dùng const
+
+-> Kiểu tham chiếu
+Mọi biến class, delegate, interface, dynamic, object, string thì luôn tự là tham chiếu
+
+-> Keyword var: Ép kiểu ngầm định, giá trị của biến var buộc phải khai báo trong lúc khởi tạo
+-> Keyword as: ép kiểu tường minh
+
+-> Kiểu vô danh
+
+-> Keyword dynamic
+var là tự xác định kiểu ở thời điểm biên dịch
+dynamic tự định kiểu cho biến trong runtime
+
+-> Keyword null: 
+Chỉ dùng cho các kiểu tham chiếu như class. K được với các kiểu tham trị như int, string,... trừ khi có nullable
+
+-> Dùng ?? và ??= và ?
+int? a = 0; là viết tắt của Nullable<int> tức biến kiểu này có thể nhận int or giá trị null => khi dùng nullable type thì k thể reference tới. VD thêm: int b = a; là sai
+
+a is null => trả ra true or false
+
+a ?? (3+1) => a khác null thì lấy a, a null thì mới tính giá trị và trả về vế phải
+
+a ??= 0 + 1 => a khác null k làm gì, a là null thì mới tính giá trị và gán cho a giá trị biểu thức phải
+
+-> Dùng keyword @
+int @class = 15; dùng được cho các biến mà bị trùng với keyword của C#
+=> ref tới "# Thao tác với string"
+
+-> ref tới "Code / C# Intermediate / Type and variables"
+Đọc 10 file 499999 dòng, mỗi dòng 10 string dài 10 ký tự, lấy ra 10 string có tần suất xuất hiện cao nhất => sao cho bộ nhớ nhỏ dưới 1GB và tốc độ nhanh 20s bằng C#
+=> Bản hoàn chỉnh: ref tới "Avepoint / homeworktemplate09132022 / Bài 7"
+
+Dùng Parallel.For để đọc file và lưu vào string tăng tốc. Lưu ý các operation trong các collection đều k thread safe. Muốn add vào list phải dùng keyword lock để chỉ cho 1 thread thực hiện 
+
+Thực tế vấn đề nằm ở chỗ k tìm được 1 kiểu dữ liệu như map để check sự tồn tại O(1) và search được mà k ngốn memory. Dùng Dictionary tốn rất nhiều mem nên k tốt là phải. Dùng list thuần cho mem rẻ hơn nhiều thì lại k search được. Sai từ cách tiếp cận
+=> Dùng mảng string thuần và đọc tất cả trước r xử lý sau là mấu chốt vấn đề về bộ nhớ.
+
+hashcode là dùng trong các kiểu dữ liệu như HashSet, HashTable thì nó sẽ dùng để quick compare trước, nếu 2 hashcode bằng nhau sẽ chuyển sang ss bằng equals. Tính chất là 2 object bằng nhau sẽ có cùng hashCode nhưng 2 hashcode bằng nhau có thể khác object. Tức default thì equals nó ss giá trị, còn getHashCode là để ss nhanh
+equals là ss giá trị, hashCode là số nguyen trả về khi hash các phần tử bên trong. Ta có thẻ reimplement 2 hàm để custom điều này theo ý ta.
+=> equals là để ss về reference, nếu muốn ss về giá trị phải tự implement, còn getHashCode có thể lấy ra để so sánh hoặc dùng vào mục đích gì khác tùy với tính chất như trên. Tức trong đk bth, ta k cần dùng hashcode.
+
+
+
+# Thao tác với string
+Phần lớn giống java
+-> Keyword @: Dùng để ignore escape sequences là các từ \n \r \b ...
+-> Keyword $
+
+Các thao tác trên chuỗi như format, tách, concat: https://xuanthulab.net/chuoi-ky-tu-string-trong-c-sharp.html
+
+-> Dùng StringBuilder: giống java, url trên
+StringBuilder nhanh hơn String thuần khi thao tác concatenation và modification. Nếu biết trước string có thể đổi thì dùng StringBuilder luôn
+
+-> Dùng RegExp: Có nhiều tool online generate RegExp
+
+-> Dùng StringReader StringWriter: Cũng chỉ là 2 cái giúp đọc ghi string theo kiểu đọc từng dòng hay độc từng ký tự chẳng hạn
+
+
+
+# Class
+Khai báo lớp mà k chỉ ra phạm vi cụ thể thì là internal
+Khai báo thành phần trong lớp mà k chỉ ra phạm vi cụ thể thì là private
+Instance của class gọi là 1 object
+
+Mọi element ngay trong namespace k thể là private hay protected kể cả class
+
+-> Access modifier có tính chất như nhau dù dùng cho lớp hay method trong lớp:
+public protected private
+internal: chỉ truy cập được trong cùng project (hay nói là cùng assembly). Thg dùng cho class
+protected internal: truy cập được khi cùng assembly or lớp con kế thừa
+private protected: truy cập từ lớp hiện tại chứa nó, lớp con kế thừa nhưng phải cùng assembly => cái này chả khác gì protected internal
+
+=> Điều qtr là: phân biệt protected với method
+TH1: A là con của B => A có thể gọi hàm protected của B
+TH2: A có 1 hàm, bên trong khai báo 1 instance mới của B, A không thể gọi hàm protected của B trong hàm đó
+=> Còn internal thì kệ mẹ, miễn cùng project là ok hết.
+
+--> Nhanh:
+Các hàm protected của Cha có thể gọi trong Con; Các hàm private chỉ gọi trong B; Các hàm internal được gọi ở bất cứ đâu trong cùng project; Các hàm public gọi bất cứ đâu kể cả project ngoài ref tới; Còn các kiểu protected internal hay private protected là nó đang kết hợp nhiều loại lại mà thôi; 
+
+Nếu khai báo lớp k nói gì cả gì dùng được ở mọi nơi trong cùng project
+Nếu khai báo hàm k nói gì cả thì chỉ dùng được trong class
+Class: Khi chỉ dùng trong cùng class thì dùng private; Khi dùng được ở con nữa thì protected; Khi dùng được ở trong cùng project thì internal; Khi dùng được ở bất cứ đâu, kể cả dự án khác ref sang và dùng được thì chơi public => Thông thường họ kqt internal mà chỉ 3 mức kia vì internal khá giống public
+
+-> Keyword this: tham chiếu đối tượng sinh ra từ lớp hiện tại
+
+-> Getter setter:
+
+-> Constructor: tương tự java, khi khai báo 1 cái sẽ mất mặc định
+Khai báo chọn constructor cho cha được như C++
+
+Constructor của cha gọi trước, khi hủy thì con gọi trước
+
+Constructor cha mà có thì mặc định thì con kế thừa k cần gọi nếu dùng, constructor mặc định của cha k có thì con phải specific rõ bằng base
+
+-> Destructor: Dùng khi cần đóng file, ngắt kết nối. Gọi sơm hơn với GC.Collect nhưng thg ta k đụng gì đến destructor cả vì muốn thủ công clean up sẽ dùng IDisposable
+Thường ta k thể thấy được nó gọi destructor khi CT chạy quá nhanh
+Khi ta viết các thứ vào destructor. GC finalize thì sẽ thực hiện các thứ ta viết trước r luôn gọi tiếp mặc định free vùng nhớ cho cả class.
+
+-> Keyword sealed: Lớp khác k thể kế thừa
+-> Cast từ nhỏ đến lớn
+
+-> Partial class: là class được khai báo từng phân ở nhiều nơi khác nhau nhưng khi dùng thì tất cả gom làm 1. Thg xảy ra khi 1 dự án nhiều người code các hàm xong muốn merge lại thành 1 class chung.
+
+--> Partial method:
+Chỉ được khi chia làm 2 nơi, 1 nơi khai báo, 1 nơi triển khai code. Hàm phải trả về void. 
+=> Partial Method thường sinh ra bởi việc sinh mã nguồn tự động khi dùng công cụ IDE chứ chả ai tự viết. Dùng trong class k được đi với access modifier nên luôn là internal
+
+-> Nested class
+
+
+
+# Dùng static
+--> Biến tĩnh: khai báo và dùng chung mọi nơi trong class như 1 giá trị duy nhất. Chỉ bị xóa khi Ct kết thúc
+
+--> Phương thức tĩnh hay hàm tĩnh (đã biết): Hàm tĩnh chỉ được dùng biến và hàm tĩnh khác chứ k được dùng biến và hàm bth
+=> Lưu ý là hàm và biến tĩnh đều có thể gọi được ở các hàm bth nên có thể dùng bổ trợ cho hàm chính của class nhưng vẫn dùng dạng singleton được bên ngoài
+
+--> Static class: K thể khai báo instance và bên trong toàn thành phần tĩnh
+Nó thường dùng để kiểu gom các hàm tĩnh lại với nhau. Trong C# có lớp tĩnh Math cung các hàm xử lý toán và nó kbh cần tạo instance.
+Cũng thường dùng cho extension method mở rộng thêm tính chất của class.
+
+--> Constructor tĩnh
+
+
+
+# Dùng try catch 
+3 thuộc tính của Exception:
+Source là tên ứng dụng or đối tượng lỗi
+StackTrace là chuỗi các bước thực thi cho đến khi bị lỗi gồm cả phương thức, hàm, vị trí file lỗi
+Message
+
+Mặc định để yên lỗi thì bản dev và prod đều sẽ crash chương trình nhưng bản dev sẽ có thông tin lỗi. Còn nếu try catch exception thì bản dev và prod k bị crash nữa còn xử lý thé nào là tùy. 
+**** Thứ ta muốn là bản prod phải k bị crash và cả 2 bản đều phải in ra lỗi cho người dùng và dev **** => Cần bắt mọi lỗi và tìm cách in ra
+
+Tuy nhiên thực tế kp lúc nào cũng có Console để in ra lỗi, VD với các Ct ASP.NET thì báo Console.WriteLine phía server sẽ k xem được gì.
+(Phía server thì cũng có thể ghi lỗi ra 1 file log riêng)
+
+Cả backend và frontend đều k muốn CT bị crash và vẫn in ra lỗi nên backend thg xử lý error vẫn trả ra data rỗng nhưng thêm trường error là true hay false và errorMessage cho frontend lấy và frontend vẫn phải bắt try catch để tránh các lỗi mạng hay unexpected error.
+=> Đó là 1 mô hình bắt lỗi chuẩn giữa client và server
+
+
+
+# OOP khác
+Giống java: abstract class, 1 class chỉ kế thừa max 1 class khác nhưng implement được nhiều interface
+
+-> Overload có sẵn trong C#:
+public static void WriteLine();
+public static void WriteLine(bool value);
+public static void WriteLine(decimal value);
+public static void WriteLine(int value);
+
+-> Kế thừa:
+A kế thừa B, A dùng trong main class C => trong main k thể gọi thuộc tính protected của B mà A kế thừa
+
+-> Tính đa hình:
+Lớp cha dùng virtual, lớp con dùng override
+Child phải implement abstract function; Có thể override virtual function;
+
+--> Phân biệt override và new:
+Dùng override&virtual sẽ giống C++, khai báo 1 new object nào là đúng hàm object đó.
+Dùng new&virtual thì type instance nào hiện tại sẽ là cái đó, VD new ClassA() nhưng cast tiếp sang ClassB thì lại gọi hàm của ClassB cơ. Chỉ các hàm có new mới đúng thôi
+
+-> Dùng interface
+
+
+
+# Dùng delegate
+Biến delegate có thể lưu hàm số có cùng tham số và kiểu trả về với nó
+
+Trong C#, event được gọi thông qua delegate, nó cũng dùng xây các hàm callback.
+
+-> Func và Action:
+Mặc định phải dùng keyword delegate để tạo kiểu delegate rồi mới khai báo biến có kiểu đó. Func và Action giúp tạo biến delegate mà k cần khai báo kiểu từ trước:
+Func<kiểu_tham_số_1, kiểu_tham_số_2, ..., kiểu_trả_về> var_delegate; => buộc có kiểu trả về
+Action<kiểu_tham_số_1, kiểu_tham_số_2, ... > var_delegate;
+Action k có kiểu trả về vì nó chỉ gán cho các hàm có kiểu trả về là void
+
+
+
+# Dùng IDisposable và using
+ref tới "# Class / Destructor"
+
+Bth instance của class được xóa tự động nhờ .NET CLR sẽ gọn hàm destructor, mặc định sẽ giải phóng hết các thứ trong class. Nhưng có nhiều thứ CLR k tự giải phóng được như thao tác với file - stream, kết nối mạng, kết nối DB, những vùng mà bộ nhớ k quản lý được,...
+Do đó interface System.IDisposable có hàm public void Dispose để các class tự làm việc đó. Để gọi hàm này có thể dùng keyword using(<>) hoặc gọi .dispose() thủ công
+
+UC1: Các class có sẵn của .NET như StreamWriter có implements IDisposable nên khi khởi tạo gắn với 1 file chẳng hạn thì phải đóng nó với .dispose
+UC2: Các class bth ta tạo ra mà có composition các biến có implements IDisposable. Vd class có biến new StreamWriter thì khi giải phóng class, ta cũng cần dispose biến này
+
+VĐ1: Tại sao người ta k giải phóng các thứ đó trong class bằng cách viết vào destructor mà lại tách ra hàm dispose riêng? Thực tế ta viết vào destructor vẫn chạy bth. Nhưng đây là các thứ riêng người dùng quản lý và cần đóng thủ công, còn destructor gọi phụ thuộc vào GC chạy nên tách riêng ra sẽ chuẩn hơn, mà vẫn đảm bảo người dùng muốn clean cái gì vào lúc nào cũng được mà object tự bị GC giải phóng khi k cần dùng vẫn đúng.
+
+VĐ2: Destructor luôn chỉ bị gọi 1 lần nhưng dispose có thể bị gọi nhiều lần hoặc bị xung đột vì vừa gọi destructor, vừa gọi dispose sẽ gây lỗi. 
+=> Dùng thêm biến class check đã dispose hay chưa, ta có thể tránh được xung đột khi clean up
+
+
+
+# Hàm
+-> Access modifier: public private protected internal.
+internal: mặc định nếu k có access modifier, hàm chỉ dược gọi trong project
+
+Static có thể kèm với bất cứ access modifier nào
+
+-> Truyền tham trị (mặc định) và tham chiếu
+Khi tham số hàm có ref thì truyền vào buộc có ref là tham chiếu. Còn không có ref thì tùy ý
+
+Dùng ref thì biến truyền vào phải khai báo giá trị or vùng nhớ từ trước khi truyền vào hàm. 
+Dùng out thì biến truyền vào k cần có giá trị nhưng luôn phải khai báo giá trị ở đầu hàm truyền vào. Thg dùng ref để đảm bảo sự chặt chẽ
+
+-> Generic:
+Dùng được cả với lớp và hàm. 
+VD các kiểu hàng đợi hay List trong .NET đều là generic class
+
+-> Lamba function: arrow function chính là lamba function
+Có thể dùng để định nghĩa hàm của class được
+
+
+
+# Event
+Mục đích là: Khi publisher làm 1 cái gì đó, các subscriber sẽ bắt được và perform các hành động tương ứng. Để làm được điều này thì publisher cần có 1 biến delegate, các subscriber sẽ gán các hàm cần thực hiện vào biến này và khi nào publisher làm gì thì tự gọi hàm trong biến delegate đó là được
+=> Điều đặc biệt là ta tưởng A subscribe to B thì A sẽ là người thực hiện action khi bắt được sự kiện nhưng không phải mà A sẽ gán hành động cho B. Rồi B làm gì thì tự gọi hàm của nó thôi.
+Như v chỉ cần 1 publisher, nhiều subscriber và 1 biến delegate trong publisher là xong.
+
+Các sự kiện có sẵn trong dotnet như KeyDown, Load, GotFocus của Form, Application.Application.Idle,.. đều xây dựng từ 1 biến delegate là EventHandler. Biến này khai báo ở ngay trong namespace System. Với cấu trúc: 
+public delegate void EventHandler(object sender?, EventArgs e);
+Chỉ cần tạo 1 biến publisher dùng nó làm delegate là được. Còn EventArgs e là 1 kiểu lưu arg của hàm mà event này thực hiện. Nếu cần truyền tham số vào thì dùng tiếp nó là được
+=> Thực tế dùng EventHandler chỉ là dùng 1 biến delegate có sẵn chung của .NET thôi. Ta có thể tạo thủ công làm thì custom hàm callback thoải mái k cần tuân thủ cái EventArgs làm gì
+
+Keyword event có hay không đều được khi dùng với EventHandler có sẵn của .NET
+
+
+
+# Struct và Enum
+-> Struct
+Cũng có hàm khởi tạo nhưng nếu dùng phải gán đầy đủ giá trị các thuộc tính struct trong nó và khởi tạo bth k có new thì dùng constructor phải thêm new
+
+Struct được lưu vào stack, class lưu trong heap và dọn bởi GC.
+
+
+
+# Dùng namespace
+-> Dùng using với =
+
+-> Dùng using static: Khi import mà chỉ dùng các phương thức tĩnh chứ k cần cả namespace hay class
+
+
+
+# Operator overloading
+Như C++ thì làm được với mọi kiểu toán tử, kể cả lấy index [] các thứ
+Ref tới "C++"
+
+-> Đánh indexer
+Có thể đánh index cho class là string hay int đều được
+
+
+
+# Thao tác với System.IO
+-> DriveInfo
+
+-> Path: Thao tác mọi loại đường dẫn
+Tổng hợp: https://xuanthulab.net/lam-viec-voi-file-co-ban-luu-va-doc-file-text-trong-c-c-sharp.html
+
+-> File
+WriteAllText và ReadAllText: có đầy đủ cả tạo, ghi, đóng
+Có FileInfo
+
+Ngoài ra: 
+File.Create(filename) tạo file
+File.Delete(filename) xóa file
+File.Exists(filename) kiểm tra file có tồn tại
+File.Copy(path_src, path_des) copy file
+File.Move(path_src, path_des) di chuyển file
+
+-> Directory: Thao tác với thư mục
+Tổng hợp: https://xuanthulab.net/lam-viec-voi-file-co-ban-luu-va-doc-file-text-trong-c-c-sharp.html
+Có DirectoryInfo
+
+
+
+# Dùng Stream
+Là đối tượng được dùng để truyền dữ liệu. 1 số loại chỉ cho đọc, 1 số chỉ cho ghi, 1 số cho phép truy cập ngẫu nhiên (hàm seek). Lớp cơ sở của .NET là System.IO.Stream để hỗ trợ việc đọc ghi byte. Từ đó có hàng loạt lớp kế thừa là FileStream, BufferStream, MemoryStream,... dùng cho các mục đích khác nhau
+Stream là tài nguyên không quản lý bởi GC nên phải dùng IDisposable và using
+
+Các hàm thuần túy của System.IO.Stream: https://xuanthulab.net/stream-trong-c-lam-viec-voi-filestream-lap-trinh-c-sharp.html
+Các hàm thuần của Stream đã cho phép đọc, ghi byte hay dịch con trỏ hiển nhiên rồi.
+
+-> FileStream:
+Khởi tạo đầy đủ: https://xuanthulab.net/stream-trong-c-lam-viec-voi-filestream-lap-trinh-c-sharp.html
+URL khác: https://openplanning.net/10535/csharp-binary-streams#a1818221 => có khởi tạo đầy đủ, lấy FileStream từ FileInfo
+
+--> Khi đọc file text cần xác định encoding của nó: 
+BOM (Byte order mark) là cách dùng các ký hiệu đặc biệt ở đầu 1 file để xác định file đó có kiểu encoding nào. Các ký hiệu đó gọi là BOM - Preamble. Url: https://en.wikipedia.org/wiki/Byte_order_mark
+Thông thường k có BOM - Preamble là mặc định UTF8.
+Khi dùng BOM mở bằng cách tool text editor k thấy nó đâu
+
+ASCII dùng 1 byte biểu diễn 1 ký tự. 
+UTF8 được xây based on 8bit code unit tức 1 ký tự có thể là 8bit, 16bit, 3 byte or 4 bytes
+UTF16 tương tự 1 ký tự có thể dùng 2 bytes or 4 byes,.. để biểu diễn
+
+--> Ghi file
+--> Đọc file
+Convert qua lại byte và string bằng kiểu Encoding
+
+-> Tổng hợp các kiểu stream: Stream chỉ đơn giản là mô phòng dòng bytes được xếp hàng liên tiếp nhau. VD truyền tải qua mạng ta có thể k dùng stream, nhưng ta muốn thao tác đơn giản sao cho dòng data đi lần lượt từ nguồn tới đích thì dùng Stream cho tiện
+
+System.IO: BufferedStream, FileStream, MemoryStream, UnmanagedMemoryStream
+  System.IO.IsolatedStorage: IsolatedStorageFileStream
+System.IO.Pipes: PipeStream
+System.Net.Sockets: NetworkStream
+Systen.Security.Cryptography: CryptoStream
+System.IO.Compression: DeflateStream, GZipStream
+=> Cần mã hóa, thao tác với bộ nhớ, với file, nén, truyền tải qua mạng, buffer thì dùng các stream tương ứng
+
+Stream là baseclass là lớp trừu tượng
+
+-> Dùng BufferedStream:
+Là stream wrap lấy 1 stream khác để nâng cao hiệu quả đọc ghi dữ liệu (tức bth k có đệm, h có thêm đệm)
+Vd tăng hiệu suất tốt nhất xem trong code
+
+-> Dùng MemoryStream: 
+Là luồng Stream mà dữ liệu được lưu trên bộ nhớ
+Có thể seek
+Bản chất là nó quản lý 1 bộ đệm buffer là mảng bytes thuần bên trong, ta có thể lấy ra byte[] đó. Do cũng có tính chất của buffer nên nếu ghi byte vào bị tràn, bộ đệm sẽ tạo ra 1 mảng mới có kích thước lớn hơn và copy dữ liệu mảng cũ sang.
+
+-> Dùng UnmanagedMemoryStream: 
+Đọc các luồng dữ liệu k được quản lý mà k cần sao chép tất cả lên Heap trước khi dùng. 
+VD: có rất nhiều dữ liệu rời rạc trên bộ nhớ. Bh muốn xử lý, ta phải copy về 1 chỗ rồi làm tiếp. Với UnmanagedMemoryStream, ta có thể quản lý bằng cách quản lý các con trỏ của từng dữ liệu rời rạc.
+
+MemoryStream cũng giới hạn 2GB, nếu vượt quá cũng buộc dùng UnmanagedMemoryStream
+
+-> Dùng CryptoStream: 
+Url: https://openplanning.net/10535/csharp-binary-streams#a2054053
+Chỉ cách dùng kèm lưu file mã hóa DES luôn
+
+
+
+# Extension Method
+Thêm các phương thức vào lớp có sẵn mà k cần khai báo 1 lớp khác kế thừa hay biên dịch lại.
+Cơ chế: Tạo hàm static trong class static sẽ mở rộng cho class là tham số đầu tiên truyền vào hàm. Dù hàm là static nhưng lại có thể gọi bằng biến instance của class đó.
+
+VD: LINQ là thư viện dùng Extension Method. Khi using namespace của LINQ ta có thể sử dụng thêm rất nhiều hàm của các collection mà trong LINQ thực tế không hề khai báo các class này. Nó chỉ toàn static class để mở rộng cho các class collection
+
+
+
+# Dùng Collection 
+=> ref tới "Projects / Project C# read file"
+
+.NET cung các lớp generic như List<T>, Dictionary<TKey, TValue>, Stack<T>,... trong System.Collections.Generic
+Các lớp k sử dụng generic như ArrayList, Stack, Queue,... trực tiếp trong System.Collections
+
+List các interface có thể dùng: https://xuanthulab.net/collection-va-list-trong-c-c-sharp.html
+Còn có IFormattable triển khai toString()
+Nó giúp làm các tính năng như sort, implement map tùy ý, so sánh bằng,..
+
+-> Dùng List: Add, AddRange, Insert, for, foreach in, RemoveAt, RemoveRange, Các hàm tìm kiếm, Contains, Reverse, ToArray
+Nhiều hàm như Find, Sort nhận tham số delegate
+
+Ref tới: https://xuanthulab.net/collection-va-list-trong-c-c-sharp.html
+
+-> Dùng SortedList: Chỉ dùng khi toàn bộ dữ liệu được sx theo 1 trường key k trùng giá trị. Tự động sort khi add
+https://xuanthulab.net/sortedlist-trong-lap-trinh-c-c-sharp.html
+
+-> Dùng Queue và Stack: https://xuanthulab.net/lop-queue-hang-doi-va-ngan-xep-stack-trong-c-c-sharp.html
+
+-> Dùng LinkedList: https://xuanthulab.net/linkedlist-danh-sach-lien-ket-trong-c-c-sharp.html
+
+-> Dùng Dictionary SortedDictionary HashSet: https://xuanthulab.net/lop-dictionary-hashset-trong-c-c-sharp.html
+
+SortedDictionary dùng cấu trúc binary search tree. Còn SortedList chỉ là list được sắp xếp nên cả 2 cùng tốn O(logn) khi search. Nhưng:
+- SortedList dùng ít mem hơn SortedDictionary
+- SortedList có insertion và removal chậm hơn vì tốn O(n) nhưng SortedDictionary chỉ tốn O(logn) trên cây
+- Nếu duyệt data tất cả chỉ 1 lần thì SortedList nhanh hơn 
+
+Còn HashSet không cho trùng giá trị và có hiệu năng cao trong tìm, thêm, xóa
+
+-> Dùng ObservableCollection
+Tương tự như collection bth nhưng có thể bắt perform action khi dữ liệu nó lưu thay đổi.
+
+Điều đặc biệt là sự thay đổi nằm ở phía model chứ kp thay đổi thông qua controller.
+VD: Khi ấn vào button thì phía giao diện trực tiếp xóa data trong model có data thuần. Model đó nằm trong 1 controller hiển thị như ListView hay DataGrid thì các controller đó tự động update khi data thay đổi vì nó được binding rồi. 
+Trong React thì nó kiểu đổi state là component rerender lại đó. Nhưng đây gọi là đổi giá trị thì controller cũng đổi theo 
+
+Nó thg dùng trong các ứng dụng WPF có giao diện desktop thì đây gọi là binding giống như trong Qt. Khi dùng WPF, C# đã support tự động bind các thứ khi gắn ObservableCollection vào controller
+
+--> Dùng WPF: 
+Giống hệt Qt, 1 file xml giao diện kèm màn hình kéo thả, 1 file logic bằng C#
+
+
+
+# Dùng Linq
+Cú pháp giống SQL basic. Chỉ dùng với các collection hỗ trợ linq là các class triển khai interface IEnumerable và IEnumerable<T>
+from in where select group orderby join let
+
+
+
+# Reflection trong C#
+-> Dùng class Type: Class này là lớp cơ bản của kỹ thuật Reflection trong .NET
+Basic nhất là: object.GetType() trả ra biến kiểu Type cho biết mọi thông tin về class của đối tượng; Type có GetProperty được dùng nhiều nhất là hàm trả ra kiểu PropertyInfo có thể lấy và set giá trị cho thuộc tính của bất cứ class nào.
+Ngoài ra: https://xuanthulab.net/lop-type-cach-doc-gia-tri-thuoc-tinh-cua-mot-lop.html
+
+Type cũng dùng trong kỹ thuật binding của WPF hay DI Container. Nó như kiểu xây dựng chức năng mà nhận được 1 đối tượng với tên thuộc tính, ta chả cần biết đối tượng thuộc class nào nhưng vẫn có thể đọc ghi giá trị cho thuộc tính bằng "Kỹ thuật Reflection"
+
+
+
+# Data Annotation
+Thêm chú thích cho class, method, attribute và nó sẽ trở thành metadata. Annotation đó sẽ kiểu thêm code or cung các tính năng mở rộng nào đó. Data Annotation là metadata nên cũng có thể được truy xuất bởi kỹ thuật Reflection (trong java cũng có)
+VD ta tạo ra các schema tạo bảng cho database hay model để tạo webpart.
+VD ta tạo ra 1 attribute rồi dùng cho 100 class khác để bổ sung tính năng chung
+
+Phân biệt: class có method và property, cả class và method và property lại có attribute mô tả là data annotation
+
+-> Tạo data annotation: Phải kế thừa System.Attribute
+
+-> Dùng Data Annotation của C# có sẵn: nằm trong System.ComponentModel.DataAnnotations
+Xong có thể check các instance tạo ra có thỏa mãn data annotation hay không
+=> Tức C# cung luôn cho ta các tính năng validate cơ bản với các kiểu dữ liệu cơ bản mà k cần viết hàm check
+
+
+# .NET new feature (>v6)
+-> Top-level statement: Hàm main bị loại bỏ và tự động lấy phần code không thuộc namespace và k thuộc lớp nào sẽ mặc định nằm trong hàm main. Khi compile nó tự phát sinh hàm main để chạy
+Nếu vẫn dùng hàm main như cũ vẫn không sao
+
+
+
+# Lập trình async
+=> ref tới "Module Network C# / # Đa luồng socket"
+
+Trong .NET có 3 mô hình bất đồng bộ:
+APM (Asynchronous Programming Model) ra đời cùng phiên bản .NET đầu tiên (Dùng các hàm có Begin End đó); EAP (Event-based Asynchronous Pattern) ra đời sau và hoạt động hướng sự kiện(Khi ta dùng Event) và TAP (Task-based Asynchronous Programming).
+TAP: xuất hiện mới nhất và xây dựng trên bộ thư viện TPL(Task Parallel Lib) được khuyến khích dùng nhất thay thế hoàn toàn 2 cái cũ. Nó dùng keywrod async await và các hàm Parallel.For, Parallel.ForEach đó
+=> ref tới "Projects / Project C# read file"
+
+Ngoài ra còn có Parallel LINQ (PLINQ) là bản parallel implementation của the Language-Integrated Query (LINQ) pattern. Khi dùng các câu lệnh linq mà muốn bất đồng bộ thì dùng
+Còn có nhiều cách khác: https://medium.com/@luisalexandre.rodrigues/c-parallel-programming-6-ways-to-work-with-thread-safe-collections-3b8212d25b31
+
+Lập trình đa luồng khác với lập trình bất đồng bộ: đa luồng là chạy nhiều luồng, mỗi luồng đều đồng bộ, còn lập trình bất đồng bộ thì 1 core CPU có thể chạy nhiều luồng cùng lúc, tranh thủ lúc luồng A đang rảnh thì nhảy sang luồng B xử lý tiếp. Tức để làm được bất đồng bộ, ta phải có đa luồng rồi
+=> ref tới "# Dùng Thread"
+
+-> Dùng TAP
+--> Lớp Task
+Start() Wait() Result
+
+Bên cạnh việc gọi Wait(), nếu gọi task.Result để lấy kết quả mà task chưa hoàn thành, nó vẫn block thread hiện tại và xử lý xong sẽ trả về giá trị
+
+Task thường gắn với 1 hàm số biểu diễn 1 công việc phải làm. Còn Thread là 1 luồng của chương trình. Khi ta tạo ra 1 Task, ta có thể xem Task.CurrentId của nó và nó được phân giá trị riêng khác với Thread id.
+
+---> Dùng CancellationToken
+.NET hỗ trợ hủy task nhưng k có pause và resume. Có thể tự implement. URL: https://devblogs.microsoft.com/pfxteam/cooperatively-pausing-async-methods/
+
+--> Dùng async await keyword: Hệt JS
+1 Task có thể là async or not
+
+--> Dùng Parallel: 
+---> Dùng Parallel.For: 
+Parallel.For nhận delegate là hàm void có tham số int
+Mỗi task được chạy trên 1 thread nào đó chứ kp mỗi task 1 thread, có thể nhiều task cùng 1 thread tùy tài nguyên hệ thống.
+
+Implement Parallel.For kiểu: Bên trong ta gọi 1 hàm số blocking như bth, hàm này tạo ra 1 list các task và cho các task start đồng thời, sau đó nó await hết các task mới đi tiếp mà thôi. Trong JS tương đương với Promise.all([]); nhưng k hỗ trợ việc khởi tạo task như v.
+=> Parallel.For nó như hàm utility hỗ trợ tạo task chú thực tế TAP chủ yếu dùng class Task là đủ rồi.
+
+Dùng lock
+
+----> Parallel For mà dùng async Action thì async function đó k bị await bên trong Parallel.For mà thôi. Implement đơn giản là k await các task có async nữa là được
+
+---> Dùng Parallel.ForEach:
+Y hệt Parallel.For nhưng dùng cho Collection như List. Action sẽ nhận type giống collection
+=> EAP hay TAP hay APM đều là cách thức khác nhau để thực hiện bất đồng bộ, chỉ cần dùng 1 trong 3 là đủ. Mặc định dùng TAP, nếu có Th buộc dùng các kiểu khác mới phải dùng thôi
+
+-> Các cách sử dụng nhanh: Main gọi 1 hàm, bên trong hàm
+1) Tạo ra Task như bth và cho Start thì task đó thực hiện độc lập với thread bên ngoài. Có thể cho Wait or Result để chờ thực hiện xong thì lấy giá trị. Nếu thread bên ngoài mà kết thúc thì mọi Task được gọi bên trong cũng dừng
+Vc ta tạo ra 1 hàm trả về kiểu Task, bên trong tạo task rồi return task thì cũng tương tự khai báo task bth
+2) Tạo ra async Task thì Task đó vẫn thực hiện độc lập như bth nhưng bên trong Task có thể dùng thêm các hàm await để chờ thực hiện từng bước
+3) Như case 2 nhưng dùng thêm CancellationToken sẽ có thể kiểm soát dừng task nào bất cứ lúc nào.
+4) Dùng Parallel.For với Task bth thì tương tự tạo 1 list các Task rồi await nó
+5) Dùng Parallel.For với async Task thì tương tự tạo 1 list các Task rồi Start như bth.
+
+=> Tưởng tượng mỗi task là 1 Promise query API, ta dùng async await như bth giống hệt trong JS. Trong JS nó dùng EventLoop sẽ k có xung đột, ta có thể dùng lock để đảm bảo các Task k bh xung đột với 1 biến nào đó, thì nó sẽ chạy y hệt như JS
+
+
+
+# Dùng Thread
+Mọi thread cùng chia sẻ 1 virtual address space (trong cùng 1 process). Còn 2 thread khác process thì vẫn có thể chia sẻ nhưng khó khăn hơn.
+Process là cả CT lớn. Khi dùng multithreading ta mới qt đến thread, nhưng khi dùng asynchronous programming ta chỉ cần qt đến task. Task sẽ tự phân bố vào thread rồi thực hiện bất đồng bộ lien thread khi rảnh 
+
+=> ref tới "Network C# / # Đa luồng socket (asynchronous)"
+=> ref tới mục "Tài liệu"
+
+-> Dùng ThreadPool
+
+!!!!!!!
+System.Threading Thread ThreadStart ParameterizedThreadStart Start Sleep 
+System.Threading.ThreadAbortException Abort
+Thread.CurrentThread.Name
+t.IsBackground
+Thread.Sleep(1000)
+ThreadPool
+
+-> Monitor
+Monitor.Enter(a);
+Monitor.Exit(a);
+
+-> Mutex
+m.WaitOne();
+m.ReleaseMutex();
+
+-> Lock
+
+-> EventWaitHandle
+-> AutoResetEvent
+-> ManualResetEventSlim
+-> ManualResetEvent: initial state set là false, nếu là true thì WaitOne tự bị bỏ qua
+mre.WaitOne();
+mre.Set();
+=> Giả sử có nh thread cùng biến mre gọi WaitOne, 1 lần gọi mre.Set() là tất cả sẽ pass qua
+!!!!!!
+
+
+
+# Module Network C#
+
+
+
+# Lỗi
+-> Dùng string? x; bị lỗi
+=> right click project -> unload project -> thêm vào file xml:
+<PropertyGroup>
+  <Nullable>enable</Nullable>
+  <LangVersion>8.0</LangVersion>
+</PropertyGroup>
+-> reload project
+
+
+
+# Other
+Tools -> Options -> Environment -> Keyboard
+Debug: F5, F10, F11
+Có thể clean solution, build solution để build tất cả project 1 lúc
+
+-> Chỉ nên dùng 1 class 1 file, nhiều class cứ new file riêng vẫn chung namespace
+Đổi tên file exe: right click project -> properties -> đổi assembly name
+
+

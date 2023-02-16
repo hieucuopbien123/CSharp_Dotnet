@@ -1,0 +1,103 @@
+Entity Framework(EF Core):
+Thư viện ánh xạ các đơn vị dữ liệu bằng lớp và cơ sở dữ liệu quan hệ. Tức các bảng hay đối tượng trong DB có thể được mô tả bằng class và attribute trong code.
+
+ORM: Object-relational mapper dùng để tương tác giữa nhiều loại database vốn k tương thích với nhau. Ta dùng Context để query chẳng hạn mà k cần quan tâm phía sau dùng loại database nào, chỉ cần dùng các câu lệnh có sẵn của class DBContext là xong. 
+=> EF Core giúp ta tương tác với database. Nó nhẹ, dễ mở rộng và open source.
+
+2 phiên bản của EF: EF Core, EF 6 => H chỉ dùng EF Core, các phiên bản số của EF stable và bị ngừng phát triển. Nó là các sản phẩm độc lập. Dù v EF 6 vẫn dùng được trong EF Core và trong traditional .NET Framework
+=> Toàn dùng EF Core. Thực tế, EF 6 vẫn có những thứ EF Core k có
+
+
+
+# Basic
+=> ref tới "Avepoint / homework / Bài 11"
+
+-> Dùng config của DB trong file json
+
+-> Cài đặt:
+EF Core không phải 1 phần của .NET Core và .NET Framework mà là 1 framework xây dựa trên nó. Nó chỉ sử dụng với các ứng dụng dựa trên .NET Core hoặc .NET Framework. Mặc định ta xét tạo 1 dự án Console App sẽ dùng .NET Core và dùng được entity framework. Nó là 1 gói của NuGet.
+
+EF Core xây dựng theo mô hình trình cung cấp. Để cài cần có 2 thứ:
+1) Trình cung cấp cơ sở dữ liệu
+2) Công cụ EF Core
+=> 1 thì tùy vào cơ sở dữ liệu là gì mà cần cài trình cung cấp tương ứng. VD ta dùng SQL Server thì phải cài Microsoft.EntityFrameworkCore.SqlServer, có cả list: https://hiepsiit.com/detail/EFCore/ef-core
+Khi cài bằng NuGet, có thể setup để cài chỉ cho 1 package hay cho cả solution. Khi cài, có thể xem trước danh sách các gói sử dụng được trong framework, chỉnh cài đúng phiên bản. Khi cài 1 gói của NuGet, nó sẽ tự cài các gói phụ thuộc khác đủ để chạy được gói đã cài. 
+
+C1: Right click vào solution hoặc project vài cài
+C2: Tools -> NuGet Package Manager -> Package Manager Console -> Vd: Install-Package Microsoft.EntityFrameworkCore.SqlServer
+
+=> 2 là công cụ EF Core để dùng được các hàm của EF Core.
+VD: Microsoft.EntityFrameworkCore.Tools là package giúp thực thi các lệnh EF Core cho scaffolding, chuyển đổi,...
+VD: Microsoft.EntityFrameworkCore.Tools.DotNet giúp thực thi các dòng lệnh EF Core từ CLI nhưng sẽ phải config file .csproj tùy phiên bản. VD trong https://hiepsiit.com/detail/EFCore/ef-core/cai-dat-entity-framework-core
+
+Thg sẽ cài: Microsoft.EntityFrameworkCoreDesign và Microsoft.EntityFrameworkCore.Tools là đủ
+
+-> Có 3 kiểu loading data. Trong các database ngôn ngữ khác cũng có.
+Khi dùng database, 1 bảng chỉ ref tới 1 bảng khác thông qua id thì ok. Nhưng khi dùng 1 số loại như entity framework, 1 bảng có thể chứa biến bảng khác luôn, thì mặc định lấy biến bảng cha, nó sẽ k load các con bên trong. Vì nếu load sẽ rất lớn, khi đó xuất hiện 3 kiểu loading
+Eager: load tất cả bảng con nếu load bảng cha
+Explicit: load bảng cha k load con nhưng có thể chủ động gọi hàm load con khi cần
+Lazy: setup khi nào cần con thì tự động được load
+Trong các loại khác như mongoose cũng có các kiểu này
+
+
+
+# Tương tác DB
+Mỗi DB có 1 class context riêng. Mỗi bảng là 1 thuộc tính.
+Có 2 cách là dùng fluent API or dùng data annotation để config cho model => ref tới "Slide"
+
+-> Connect DB:
+SQLConnectionStringBuilder => cái IntegratedSecurity là có dùng window authentication hay không. Nếu k thì phải dùng username và password
+InitialCatalog là database name
+
+-> Tạo DB: DbContext có thuộc tính Database là kiểu DatabaseFacade có thể thao tác mọi thứ với database như tạo và xóa or lấy thông tin
+
+Sau khi tạo DB, k thể thao tác ngay vì k có quyền. Ta phải vào SMSS cấp đủ quyền mới tạo table các thứ được. Từ trước khi tạo database cũng phải cấp quyền database creator trong user roles từ trước
+=> Hoặc setup quyền là system admin hoặc dùng tk sa sẽ được dùng thoải mái
+
+-> Xóa DB:
+EnsureCreatedAsync / EnsureCreated
+EnsureDeletedAsync / EnsureDeleted
+Tương tự các hàm khác đều có 2 phiên bản: SaveChanges / SaveChangesAsync
+
+Tracking queries: khi gọi saveChange, data trong database sẽ đổi theo biến
+Mặc định là No tracking queries: làm bất cứ 1 cái gì thì cũng chỉ là read only, kbh đổi database
+
+--> Solve conflict:
+Khi saveChanges to DB, có thể có conflict mà phải solve trong câu lệnh catch rồi retry until no conflict
+Confict resolve có nhiều TH, lấy cái trước khi sửa, lấy cái sau khi sửa, lấy cái hiện tại đang có của database => giống github
+
+-> Thêm vào db
+-> Lấy data từ db
+
+-> Update table data
+Mỗi data khi lấy về từ kết quả truy vấn hoặc được thêm vào trong EF đều được gọi là "được giám sát" và được theo dõi bởi EF. Mỗi khi ta đổi giá trị thì nó theo dõi và chỉ cần gọi SaveChanges là mọi thứ đã đổi sẽ được lưu
+VD: tạo 1 đối tượng là 1 record của table độc lập thì EF k theo dõi sự thay đổi vì kp "được giám sát"
+
+Mỗi đối tượng được theo dõi sẽ có class EntityEntry để quản lý việc đó. Dùng class này, ta có thể khiến EF theo dõi or k theo dõi 1 trường bất kỳ hay 1 record bất kỳ với 2 hàm Attach và Detach
+
+
+
+# Migration
+Migration là kỹ thuật tương tác với database. Có 2 cách làm việc với database:
+1) Làm việc với 1 DB đang tồn tại (database first) thì việc cập nhật database độc lập với ứng dựng => migration ít hữu ích
+2) Tạo DB và thay đổi cấu trúc bằng code thì migration rất hữu ích. 
+=> Nó khác với việc ta xóa DB và tạo mới r thêm data thủ công vì migration nó lưu lịch sử phiên bản và ta có thể quay về phiên bản cũ bất cứ lúc nào. Cơ chế như git, thay đổi model thì ss với phiên bản mới nhất tìm điểm khác biệt để update lên phiên bản sau.
+
+Migration thì EF Core model là source of truth
+Scaffold ngược lại thì DbContext chuyển từ Database schema sang EF Model
+
+-> Câu lệnh: Mở View -> Other Windows -> Package Manager Console
+Add-Migration MigrationName1
+Update-Database
+Remove-Migration
+
+Nếu 1 DB Server đã có DB có tên r thì k thể migration lại trùng tên được
+
+
+
+# Dùng logging (trong EF)
+Cài: Microsoft.Extensions.Logging.Console
+Trong DBContext: using Microsoft.Extensions.Logging;
+=> Trong console tự hiện câu lệnh SQL thuần mỗi khi query
+
+

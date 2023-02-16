@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33214.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstBasicProject", "FirstBasicProject\FirstBasicProject.csproj", "{557D05A5-9D90-4FF6-BC31-151FAE1CED83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructAndEnum", "FisrtBasicProject2\StructAndEnum.csproj", "{13E8881A-9B88-4AAA-BE5D-6AE83CE0FBBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{557D05A5-9D90-4FF6-BC31-151FAE1CED83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557D05A5-9D90-4FF6-BC31-151FAE1CED83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557D05A5-9D90-4FF6-BC31-151FAE1CED83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557D05A5-9D90-4FF6-BC31-151FAE1CED83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13E8881A-9B88-4AAA-BE5D-6AE83CE0FBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E8881A-9B88-4AAA-BE5D-6AE83CE0FBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E8881A-9B88-4AAA-BE5D-6AE83CE0FBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E8881A-9B88-4AAA-BE5D-6AE83CE0FBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B64B20D3-1119-4021-B997-420994B7D6BE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,91 @@
+PnP Provisioning:
+Bản PnP Core CSOM là có sẵn từ đầu, mọi cái đều phải dùng. PnP Site Core được community phát triển dựa trên PnP Core CSOM. PnP Site Core ngừng phát triển và thay thế bằng PnP Core SDK mới nhất
+
+
+
+# PnP Core CSOM
+=> ref tới "Tài liệu / pnp core csom pdf"
+Chứa code thuần túy nhất tương tác đủ mọi cách với Sharepoint => bỏ k dùng
+
+
+
+# PnP Site Core
+Dùng cho Microsoft 365 nhưng chủ yếu là cho SharePont online, Teams
+Khác với PnPJS là công cụ của JS, cái này khá giống nhưng là C# và dùng được nhiều chức năng hơn
+PnPSiteCore hay PnPCoreSDK đều build từ .NET Core
+
+Người ta khuyên dùng Graph API, nhưng có nhiều feature graph k lấy được và được implement bằng CSOM API, phải dùng PnP Site Core. 
+
+Dùng PnP Site Core để deploy webpart to client's modern page: 
+- Xây context với credentials: class ClientContext xây context cho sharepoint online object, ClientContextExtension để thêm nhiều extensions method cho class kia mà k cần sửa source code (như JS) => bản chất cái extension là kiểu dùng class static cung method static nhận biến vào và xử lý biến đó để thêm method cho nó. Bước này giúp PnP core lấy được context chứa thông tin của page sharepoint đang có trên mạng. Trong PnPJS đã biết k làm được mà chỉ giúp call api cho webpart tạo từ sharepoinrt framework, các công việc deploy hay publish page phải thủ công nhưng PnP Core tương tác được bằng code.
+URL: https://web.microsoftstream.com/video/f0d76791-516c-4d33-8316-b54ba78e61aa
+- Phân tích cấu trúc XML: Định nghĩa 1 xml structure cho dự án
+- Init modern page và webpart:  
+- Add webpart vào page: Page -> Section -> webpart
+
+Có thể cài package nuget or tạo lib r reference ngay trong project or tạo dll và ref tới
+
+Cấu trúc thư mục:
+Entities: chứa class set và get complex object từ extension methods
+Extensions: chứa extension methods định nghĩa thêm các method cho các type có sẵn
+Enums: folder chứa mọi data chuẩn
+Utility classes: helper class cung các hàm Utility
+Framework: chứa các class như Graph, Provisioning, TimerJobs sẽ consume graph API, provision site và chạy timer jobs.
+
+-> Dùng PnP Site Core
+Lỗi: khi copy dự án ra 1 chỗ khác với các folder tương đương. vc add references cho dự án copy gây lỗi k thể fix. Buộc phải add tất cả references chuẩn từ trước r mới copy
+
+--> Cài đặt
+Nuget là tool giúp quản lý các lib của C#. Có thể tải về r add reference là dùng or tải sẵn về thì tách thành projects riêng r add reference vào dự án mà dùng như bth.
+
+Khi sử dụng XMLSerializer, có thể biến đổi nd của file xml lưu trong biến class C# => Thông qua XMLSerializer cung Data Notation giúp làm điều này
+=> ref tới "Avepoint / homeworktemplate09132022 / Bài 9"
+
+Có thể publish page, tạo page mới, install package cũng như uninstal trong app catalog, deploy dùng webpart vào site.
+
+--> Thao tác với list
+Để thêm custom document lib vào site, có thể liên kết powershell với sharepoint để lấy PropertiesJson
+
+-> Tạo webpart bằng PnP Site Core sao cho mọi config đều trong file xml
+
+Dùng OfficeDevPnP.Core lib của C# dưới dạng project
+Thư viện System.Configuration cho phép lấy data của app fix cứng trong App.config là file xml 
+=> ref tới "Code / .NET / PnP Provisioning"
+
+Liên quan tới:
+- Reflection in .NET: Là phản xạ lại chính các phần code method hay properties của 1 class
+- Thư mục Assembly: k cần qt, tự có or có khi dùng thư viện ngoài dùng build ra dll. Ở đây là tên thư mục lưu dll thôi
+- XML Serialization: giúp biến file config xml thành class => hiểu cái này là xong game luôn
+- PnP remote provisioning connect với sharepoint và thực hiện mọi thao tác với page
+
+Connect tk mk -> install package lên app catalog -> add vào trong app page -> tạo list* -> add field vào list* -> thêm item vào list* -> tạo page -> add layout* -> add webpart vào layout
+
+--> Phiên bản hiện tại: Sharepoint Online 2019 => các docs bị thiếu trường. VD để tạo trường ảnh trên list thì có type thumbnail nhưng trong docs k có, phải tự suy ra từ trang của sharepoint
+
+--> Bản chất: Lợi dụng class XMLSerializer
+Khi load 1 file xml, phần code đó dạng lưu vào constConfig -> khi gọi toObject truyền vào innerXML là 1 string -> string đó được XML Serializer nhận vào type các kiểu class lồng nhau phân tích ra thành các phần tử XML dạng object. 
+VD: Nó nhận class <Elements><HomeElement><...></HomeElement><Elements> thì nó phân rã ra thành biến class Elements lồng class HomeElement lồng tiếp class con mà. Xong cấp cuối cùng nó lưu các biến kia vào trong List<SiteField> => là DataAnnotation
+
+Thực chất ảnh của list nó tự động được lưu ở 1 folder khác bên ngoài khi ta tạo ra là Site Assets, nhưng trong đây ta có thể tạo url ảnh bằng cách tự custom tạo thư mục cho nó
+
+--> Lấy thông tin của web và site
+--> Thao tác với Page
+--> Thêm canvas vao page, thêm webpart mặc định vào canvas
+--> Lấy các app đang có trong catalog
+--> Add vào catalog
+--> Add vào site
+--> Thêm 1 webpart component tạo bằng react vào page
+--> Add list 2 cách
+--> Add field to list
+--> Thao tác với layout
+
+--> Nhiều thứ khác như:
+- Gõ mật khẩu
+- Reflection trong PnP Site Core (Dự án đủ trên git)
+
+
+
+# PnP Core SDK
+Phiên bản có docs đầy đủ nhất, mới nhất, phổ biến nhất hiện tại. Code khá giống PnP Site Core
+
+

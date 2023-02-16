@@ -1,0 +1,251 @@
+Network C#
+
+
+
+# Basic
+Dùng System.Net của C#
+
+-> Tải data từ remote
+Khi tải data về nó luôn ở dạng byte[], có thể ghi đống byte[] đó vào 1 file khác
+
+
+
+## Socket
+# Socket
+Thực ra là implement of Window Socket interface để control access to network
+2 namespaces System.Net và System.Net.Sockets chứa các class cho lập trình socket
+
+Start up nhiều project: right click solution -> properties -> Startup Project -> Multiple startup projects -> start -> đổi thứ tự projects
+
+0.0.0.0 mang 2 ý nghĩa:
+Với router thì nó là địa chỉ default gateway. K có mục tiêu định tuyến hợp lệ trong NAT table thì router sẽ forward sang cổng có địa chỉ đó (để ra ngoài mạng internet)
+Bình thường thì 0.0.0.0 là tất cả các địa chỉ IP có thể có trên máy host (xét IPv4). VD: comp lắng nghe ở 192.168.1.1 và 10.1.2.1 thì cài server trên máy lắng nghe cổng 0.0.0.0, nó sẽ lắng nghe mọi request vào cả 2 địa chỉ kia. Nếu set socket server lắng nghe 0.0.0.0 thì nó lắng nghe mọi IP có trên máy vì 1 máy có nhiều loại IP => Đó là IPAddress.Any
+Ngoài ra còn có Loopback, Broadcast, IPV6Loopback, IPV6Broardcast, None, IPv6Any
+
+Chương trình chỉ chạy được khi port nó cần dùng đang k được sử dụng và người dùng có quyền sử dụng nó.
+
+Địa chỉ IPAddress truyền cho socket có thể là địa chỉ đang được gán cho bất kỳ NIC (Network interface card) nào (or wireless,..). Lệnh ipconfig có thể xem được thông tin mọi loại mạng trong máy, điền IP vào và nếu mạng đó có kết nối thì socket sẽ bắt được.
+
+Cổng chiếm dụng bởi TCP k liên quan gì tới cổng chiếm dụng bởi UDP. VD 1 tiến trình đã dùng cổng 1308 làm UDP, 1 tiến trình khác dùng TCP vẫn dùng được cổng đó
+
+=> ref tới "Socket IP"
+=> ref tới "Đa luồng socket"
+=> refer tới "Data Serialization"
+
+-> Dùng class Socket
+Là classs wrapper của Window Socket API giúp người dùng lập trình .NET socket mà k cần biết đến cấu trúc của window socket API
+
+Khi gọi lệnh Close, nó sẽ ngầm gọi lệnh Shutdown Both trước r ngắt kết nối r xóa object. 
+Cách khác là gọi disconnect cũng ngầm gọi shutdown both r ngắt kết nối nhưng k xóa object. Khi object k bị xóa đều có thể tái sử dụng, phải khai báo lại.
+
+--> Dùng DNS: Có thể dùng IPAddress.Any như trong phần UDPSocket nhưng Dns cung các thao tác tên miền và địa chỉ IP mạnh hơn như cách dùng trong TCPSocket (trong code)
+Làm việc với IP address thuần k tiện, vc dùng Dns ta có thể cho người dùng nhập text về hostname r lấy ra IP address thao tác tiếp được
+
+--> UDP:
+=> ref tới "UDP"
+
+--> TCP:
+=> ref tới "TCP"
+
+--> Dùng các class cấp cao hơn của Socket: TcpClient, TcpListener, UdpClient
+TcpClient TCPListener phải dùng stream dễ hơn
+
+-> Dùng luồng mạng NetworkStream
+
+
+
+# TCP
+Trong TCP k tồn tại kiểu broadcast 1 sender nhiều receiver
+
+Mọi hành động đều là blocking. VD gọi connect thì sẽ k chạy phần bên dưới cho đến khi biết connect thành công hay error. Dù an toàn nhưng có nhiều hạn chế như toàn bộ giao diện đồ họa bị treo hay giảm hiệu suất server khi phục vụ nhiều client 1 lúc. Khắc phục thông qua đa luồng socket. Nó vẫn là các hàm blocking nhưng ta thủ công phân chia thread cho nó
+=> ref tới "Đa luồng socket"
+
+-> Cấu trúc gói tin TCP: Slide cô + https://tuhocict.com/giao-thuc-tcp/
+Source port, destination port, sequence number, acknowledgement number, urgent data pointer, ACK FIN SYN SEQ PSH RST URG, reserved unused, header length, options, payload, receive window.
+
+Cờ SYN để thiết lập kết nối: 
+Host A --- TCP Segment[SYN=1, data=empty, SEQ client=random] ---> Host B
+Host A <--- TCP Segment[SYN=1, ACK=SEQ client+1, SEQ server=random] --- Host B
+Host A --- TCP Segment[SYN=0, ACK=SEQ+1, SEQ = SEQ client + 1] ---> Host B 
+=> Ở bước 3, kết nối đã được tạo và giá trị biến SYN k còn quan trọng gì nx
+
+--> Cả bên gửi và nhận đều có 1 TCP buffer để lưu data vào, nó sẽ lấy ra từ từ trong buffer rồi đóng thành từng gói và gửi đi, trong lúc đó, nếu có thêm data cần gửi, sender cứ add tiếp nó vào đệm thôi mà k cần chờ đợi gì. Bên nhận cứ lấy từ từ trong đệm ra để xử lý mà k sợ k thể xử lý hết trong 1 lần. Nó được thực hiện qua cơ chế có sẵn độc lập hoàn toàn với ứng dụng. Khi phát triển ứng dụng mạng, ta đang phát triển ứng dụng cho thiết bị đầu cuối nhưng có thể tác động tới các tầng OSI.
+
+TCP segment có kích thước tối đa được thiết lập tự động băng cách xác định kích thước tối đa của frame trong tầng liên kết. Segment sẽ vừa khít frame dể đảm bảo hiệu suất cao nhất. Khi kích thước dữ liệu lớn, nó sẽ được cắt thành từng phần kích thước MSS(Maximum segment size).
+
+--> Cờ FIN để đóng kết nối: 
+A --- FIN = 1 ---> B
+A <--- ACK --- B
+A <--- FIN = 1 --- B
+A --- ACK ---> B
+=> Cả 2 close
+
+--> Cờ RST (Reset)
+Khi A gửi B 1 segment mà B k đang chờ đợi để trả lời yêu cầu thì máy chủ tự động trả lời gói tin với cờ RST được bật. Hacker có thể lợi dụng điều này để quét mọi cổng của máy chủ xem cổng nào đang được bật. 
+
+--> Cờ ACK bằng 1 báo hiệu đã nhận được gói tin nào:
+Nếu cờ ACK = 1 thì Acknowledge number sẽ mang giá trị gói tin vừa nhận được (lấy sequence vừa nhận + 1). K nhất thiết cứ 1 gói tin là 1 ACK mà hiện tại gửi theo 1 lượng receive window thì ACK chỉ cần báo đã nhận được gói tin cuối cùng là được
+Chỉ khi ACK nhận về đạt yêu cầu nó mới gửi tiếp segment kế. 
+
+--> Cờ SEQ là số thứ tự của gói tin đang gửi đi. Nó k thực sự lưu số thứ tự chạy từ 0 mà giá trị ban đầu của nó được sinh random để tránh tấn công loại SYN.
+
+--> Cờ URG:
+Chỉ định có vùng dữ liệu đánh dấu là urgen. Nếu URG = 1 thì trường urgent pointer 16 bit sẽ chứa vị trí byte cuối cùng của dữ liệu khẩn. TCP sẽ phải thông báo cho máy nhận sự tồn tại của dữ liệu khẩn và gửi data chứa con trỏ đó đi.
+
+--> Cờ PSH(PUSH): 
+Tương tự cờ URG để ưu tiên dữ liệu cần được xử lý.
+
+--> Phần options: được sử dụng khi 2 máy tham gia thống nhất về kích thước tối đa của segment MSS(max segment size) hoặc hệ số tỉ lệ của cửa số trượt
+
+-> Vì dữ liệu được đưa vào đệm và lấy ra từ từ nên qúa trình truyền nó giống như 1 luồng bytes liên tục chứ kp là dạng gói như UDP, .NET coi data đó là Stream còn TCP socket là 1 backing store(nguồn phát dữ liệu). Nó cung NetworkStream chuyên để làm việc với loại luồng dữ liệu này.
+
+Cơ chế TCP khuyến nghị k nên phát nhiều lệnh send với các dữ liệu nhỏ mà nên gom thành 1 mảng lớn và phát 1 lệnh send duy nhất và cơ chế phân mảnh của TCP sẽ hỗ trợ tốt hơn. Do việc gửi liên tục theo luồng nên ranh giới dữ liệu ứng dụng k được duy trì, thg thì trong ứng dụng phải tạo ra ranh giới để tự phân tách các luồng dữ liệu nó gửi.
+
+Điểm khác biệt lớn giữa TCP và UDP là TCP có cái buffer. Receiver nhận data về vc đầu tiên là lưu vào buffer và chỉ lấy ra khi người dùng gọi lệnh đọc. Tức nếu k gọi lệnh đọc thì data nhận về vẫn được lưu ở đâu đó chứ k thực sự biến mất như UDP (gửi k đọc là mất)
+
+
+
+# UDP
+Đọc từ UDP thì ReceiveFrom trực tiếp. Khác đọc từ TCP sẽ phải while true và check đọc hết chưa từng cục. Code server thg đặt vào vòng lặp vô tận vì luôn phải hoạt động chờ client, client gửi mà k nhận là mất.
+UDP vẫn cung khả năng check tính toàn vẹn nhưng k thể fix error được. Muốn dùng UDP mà vẫn làm được các tính năng đó, phải tự implement
+VD: NTP(Network Time Protocol), DNS
+
+Khi phát lệnh gửi or nhận thì tiến trình mặc định bị block tạm cho đến khi qtr đó kết thúc + Client server phải thỏa thuận về trình tự gửi - nhận => Nếu cả 2 cùng phát lệnh nhận chẳng hạn thì sẽ bị deadblock vì 1 cái phát lệnh nhận sẽ bị block mãi cho đến khi có data gửi tới để nó nhận thực sự.
+Client gửi bao nhiêu, server nhận bấy nhiêu. Nhưng UDP k sử dụng bộ nhớ đệm lưu data gửi đến nên dù ta đã đưa vào vòng lặp vô tận nhưng nếu server xử lý lâu, client gửi và server k trong trạng thái nhận kịp thời sẽ bị mất gói tin.
+Khi 1 socket được tạo ra sẽ chiếm dụng 1 cổng và chỉ giải phóng khi gọi close. Nếu có nhiều socket được tạo ra, nó tự động chọn các cổng trống khác gán cho từng socket
+=> Khởi tạo or close socket đều tốn thời gian. Nếu socket dùng nhiều thì k nên close, dùng ít thì nên giải phóng sau mỗi lần thực thi.
+
+-> Hiểu về gói tin của UDP: https://tuhocict.com/giao-thuc-udp/
+Gói tin của UDP header có source port và destination port đều chỉ là 2 bytes nên tổng số port khả dụng chỉ là 2^16 = 65536
+Server gọi sendTo thì chương trình UDP sẽ gửi đi từ cổng mà server đang chiếm dụng. Còn client phát lệnh sendTo thì CT sẽ hỏi mượn 1 port để gửi tin đi (thg chọn từ cuối dải giá trị vì nhiều port trống ở đó). Nếu ta tái sử dụng socket phía client thì giá trị cổng nguồn k đổi, mỗi lần khởi tạo thì cổng sẽ đổi.
+ 
+Độ dài của data về lý thuyết là 8 <= Length <= 65535 tức [8 bytes header][65527 bytes data] vì dung lượng gói tin phải được mô tả bằng 2 bytes. Thực tế data chỉ được chiếm 65507 vì [20bytes IP header][8bytes UDP header][65507 bytes data]
+Length giúp xác định ranh giới của dữ liệu. Mỗi lần gửi qua UDP (bằng 1 lệnh sendTo) là đang tạo ra 1 gói tin độc lập với kích thước trong ranh giới. Và cũng cần tạo ra chừng ấy lệnh ReceiveFrom để nhận đủ các gói tin. Nếu byte dữ liệu vượt quá ranh giới thì chương trình tự cắt thành những phần kích thước nhỏ hơn và phía nhận phải tự ghép nối lại trước khi sử dụng. 
+
+
+
+# Đa luồng socket (asynchronous)
+Bình thường chưa dùng thread thì đang thực hiện là đơn luồng. Nếu có nhiều client cùng vào thì server thực hiện lần lượt từng request. Client nếu gửi 1 file lớn qua socket thì thread main sẽ bị treo.
+
+Luồng chính của server chỉ có vai trò chờ tiếp nhận kết nối. Sau khi 1 client kết nối thành công, thao tác xử lý cho client đó của server sẽ được thực hiện trên 1 luồng riêng. Có thể dùng ThreadPool để quản lý giới hạn lượng client
+
+-> Dùng ThreadPool: 
+Phù hợp với kiểu fire and forget, k qt đến kết quả trả về của phương thức.
+Ở phiên bản .NET hiện tại nó đã cho phép sử dụng được cả chục ngàn thread. Nó ẩn đi toàn bộ các thú phức tạp, chỉ cần nhét vào r cho chạy.
+
+-> Dùng BackgroundWorker: là mô hình hướng sự kiện
+Sự kiện DoWork được kích hoạt khi gọi RunWorkerAsync
+RunWorkerCompleted kích hoạt khi hoàn thành phần code trên luồng phụ
+ProgressChanged kích hoạt mỗi khi có sự thay đổi 1 biến nào đó trên luồng phụ
+=> Nên sử dụng nếu muốn dễ dàng lấy kết quả thực thi trên luồng phụ hoặc muốn theo dõi sự thay đổi biến trong luồng.
+
+-> Dùng Thread:
+Thread là lớp cơ bản nhất nên ta phải làm thủ công mọi thứ.
+Nó cho phép ta custom nhiều thứ nên rất linh hoạt nhưng lại phức tạp khi sử dụng vì phải làm thủ công. Chỉ nên dùng Thread khi có những yêu cầu đặc biệt cần custom xử lý luồng, còn k cứ dùng ThreadPool add vào phát là xong. 
+
+=> Với các bài toán cơ bản, dùng 3 cái k khác biệt lắm
+
+-> Bất đồng bộ socket
+Đa luồng khác với bất đồng bộ. Khi ta chia thread cho từng client socket thì gọi là đa luồng vì từng client chạy trên các luồng tách biệt. Nhưng trong mỗi luồng thực chất vẫn là chuỗi lệnh đồng bộ. Lập trình bất đồng bộ sẽ giúp trong 1 luồng cụ thể, các task có thể thực hiện so le nhau khi CPU dành cho 1 task rảnh vì đang chờ. Tránh treo giao diện client khi nó đang thực hiện 1 nhiệm vụ kéo dài như gửi tới server chẳng hạn (k tạo thread mới)
+
+--> Dùng mô hình APM trong socket: => k dùng
+Lập trình bất đồng bộ có 3 mô hình EAP, TAP, APM thì đây là kiểu khó dùng nhất
+Mô hình này code trong C# rối. Nó cung các cặp phương thức bất đồng bộ BeginAcceptSocket/EndAcceptSocket, BeginReceive/EndReceive, BeginSend/EndSend. Đây là các cặp tương ứng của phương thức đồng bộ: AcceptSocket, Receive, Send => Các cặp Begin/End là tiêu biểu cho mô hình APM
+
+Cơ chế chung: Ta gọi Begin thì sẽ bắt đầu bất đồng bộ -> khi bắt được thì nó thực hiện tiếp call back cho đén khi gặp End. Khi gặp end rồi, ta có thể sử dụng tiếp để lấy kết quả. Nó k thể sử dụng vòng lặp mà phải dùng đệ quy implement rất rối
+VD: Chương trình chính đang chạy có BeginAccept -> khi có kết nối thì bên trong nó chạy rồi lại gọi đệ quy BeginAceept cho người sau kết nối mới bắt được. Sau đó gọi EndAccept và dùng BeginReceive để lấy kết quả trả về -> tương tự
+
+
+
+# Data Serialization
+Đối với các kiểu dữ liệu cơ sở, C# hỗ trợ sẵn một số phương thức để thực hiện chuyển đổi sang mảng byte. 
+Đối với dữ liệu văn bản, .NET cung cấp lớp Encoding với phương thức GetBytes. 
+Đối với các kiểu dữ liệu cơ sở khác (số nguyên, số thực, logic), .NET cung cấp lớp BitConverter để serialize
+Với các kiểu phức tạp hơn như class thì phải tự serialization
+
+Thực tế các kiểu thuần ta dùng trong C# là alias cho các kiểu trong .NET framework
+Vd: ulong trong C# thực ra là System.UInt64 của .NET và khi biên dịch, tất cả được quy về kiểu tương ứng của .NET => nên dùng kiểu bth của C#
+=> ref tới: https://tuhocict.com/udpclient-tcpclient-tcplistener-bitconverter-encoding/ 
+
+-> BitConverter: dùng .GetBytes - ngược với - toX với X là kiểu của .NET
+Trong 1 class nhiều trường, phải dùng BitConverter để biến đổi từng trường của class về dạng byte ghép lại thành data class dạng bytes. Khi convert ngược lại cả class về thì phải cung byte[] và vị trí bắt đầu của mảng nơi cần convert ngược về. Nó tự xác định kích thước và đổi về đúng lượng data cần
+BitConverter chỉ dùng để serialize với kiểu dữ liệu cơ bản. Nếu 1 class chứa 1 biến class khác phức tạp thì khó dùng, phải gọi lồng
+
+-> Encoding:
+Mặc định System.String dùng mã hóa Unicode rồi. Có thể chuyển sang các kiểu khác. 
+Có Encoding.ASCII.GetBytes(textstring); và Encoding.ASCII.GetString(textbytes); để thao tác với string và bytes
+
+namespace System.Text bao rất nhiều lớp: 
+ASCIIEncoding: Mã hóa 7 bit mỗi ký tự
+UnicodeEncoding:  Mã hóa 2 byte đầy đủ mọi ký tự
+UTF7Encoding: Chuyển unicode sang UTF7 hỗ trợ tất cả giá trị Unicode sử dụng code page 65000
+UTF8Encoding: Chuyển unicode sang UTF8 sử dụng code page 65001
+
+-> Object Serialization
+Serialization sử dụng stream để đọc ghi dữ liệu. Có thể trình tự hóa văn bản hoặc trình tự hóa nhị phân.
+
+Cơ chế:
+Client có object -> client serialize object thủ công -> client truyền nó đi bằng loại stream tương ứng -> server nhận về bằng loại stream tương ứng -> server deserialize object
+=> Việc serialize object là để gửi được object đi. Vc truyền object đi bằng stream tương ứng là để tối ưu hóa. VD ta chủ động serialize thành dạng bytes thì phải dùng binary writer để gửi đi chứ.
+
+--> Text Serialization
+Ez. Qtr là kiểu date time có Ticks trả ra số nano giây từ 12h đêm 1/1/0001 => số lớn phải dùng long
+
+--> Binary Serialization
+=> Giải thích code: https://tuhocict.com/truyen-object-object-serialization-deserialization/
+
+=> Vc dùng text serialization và gửi đi bằng StreamWriter k hay vì bản chất bên trong stream nó chuyển qua bytes và gửi đi mà. Nhưng dùng binarySerialization k tốt nếu string có kích thước biến đổi
+
+-> Object serialization trong .NET
+Nó tự cung 3 class làm hộ các bước serialize bên trên và ghi trực tiếp vào stream cho ta luôn. Có Serializer hỗ trợ việc encode thành kiểu phức tạp
+
+--> Binary Formatter
+--> XMLSerializer: Do dạng dữ liệu cấp cao nên có thể dùng XmlReader và XmlWriter hỗ trợ
+--> JSONSerializer: Phải tải thư viện NewtonSoft.Json từ NuGet
+=> Dùng: https://tuhocict.com/truyen-object-object-serialization-deserialization/ có code rất đơn giản k chép lại
+
+=> Đó cũng chỉ là cách mã hóa từ 1 class thành dạng byte để truyền đi thôi. Nếu k gặp các hoàn cảnh cần thiết chả có lý do gì lại phải dùng đến json hay xml để mã hóa r gửi data đi cả
+
+-> Gửi file
+
+
+
+# Dùng Stream
+Stream giúp tăng tính ổn định, hiệu quả, đơn giản cho việc đọc ghi dữ liệu với các nguồn. Dùng nó trong TCP. Nó chỉ có tác dụng như v và phù hợp với ứng dụng mà dòng chảy data là liên tục. Nếu k dùng stream mà gửi theo từng cục thì ứng dụng vẫn hoạt động đươc, k vấn đề gì.
+
+Hiểu cơ chế tổng quan:
+A có data dạng văn bản, số, object phức tạp -> A serialize nó bằng các trình serializer -> A gửi nó tới server trực tiếp
+A có data dạng văn bản, số, object phức tạp -> A serialize nó bằng các trình serializer -> A tạo 1 stream connect tới server -> A bind serialized data vào stream là xong
+
+-> Stream chia làm 3 phần, chỗ nào cũng có thể dùng stream:
+Stream Adapter -> Decorator Stream -> Backing store stream
+     \__________________________________/
+
+Luồng Writer khi có dữ liệu sẽ k chuyển đi ngay mà nằm trong đệm. Chỉ khi có tác động nhất định thì chuỗi byte mới được chuyển đi. Cách này làm tăng hiệu quả của luồng nhưng với luồng mạng có blocking thì server cần nhận dữ liệu liên tục và nếu k có sẽ cứ block mãi. Do đó client khi có thì nên gửi đi ngay sẽ tốt hơn => luôn dùng flush với luồng mạng
+
+--> Backing store là nơi có thể đọc data vào và ghi ra. 3 loại stream chính làm việc với 3 nguồn dữ liệu: FileStream, MemoryStream, NetWorkStream (đều là lớp con của System.IO.Stream) => lớp Stream là cha của mọi loại luồng khác. 
+Các Backing store stream cơ bản có đọc ghi đóng mở, định vị. NetworkStream k hỗ trợ định vị (seek) như FileStream.
+
+Stream rất hiệu quả khi dùng để nối luồng, giúp tiết kiệm bộ nhớ. 
+VD k có nhu cầu nối luồng mà dùng Read Write của NetworkStream sẽ vẫn phải thực hiện thủ công convert bytes <-> UTF-8 thì vc dùng Stream chả đem lại lợi ích gì
+
+--> Decorator Stream làm việc với backing store stream để cung chức năng như mã hóa, nén, tạo đệm
+
+--> Stream Adapter dùng để chuyển đổi từ byte sang các kiểu dữ liệu cấp cao. Ví dụ: văn bản có thể dùng lớp StreamWriter/StreamReader, đọc ghi số/boolean dùng lớp BinaryWriter/BinaryReader, nếu cần làm việc với Xml thì dùng XmlWriter/XmlReader,...
+
+=> Tức là tùy tính huống làm việc với backing store nào hay làm việc với làm việc với type dữ liệu nào mà ở từng bước ta có thể áp dụng stream tương ứng để đơn giản công việc
+
+
+
+# Tạo 1 socket IP
+Truyền thông end to end là chương trình ở máy này gọi tới chương trình ở máy khác (TCP/IP). Bên trong nó luôn gọi truyền thông host to host là truyền data từ máy này sang máy khác (IP).
+Socket thô là socket gọi trực tiếp đến dịch vụ truyền thông host to host do giao thức IP cung cấp. Vd các chương trình như ping, tracert có thể ping đến 1 thiết bị mạng như router - nơi k có chương trình ứng dụng hoạt động (k có ứng dụng mà chỉ có host nên mới là host-to-host)
+
+-> Dùng ICMP(internet control message protocol) giúp trao đổi data giữa các host, nằm trong gói dữ liệu của IP.
+Convert data package ICMP sang bytes -> gửi đi -> nhận data bytes full về -> tách lấy lại ICMP packet dạng bytes -> convert ngược lại data.
+
+Nên nhớ tầng network luôn phải dùng giao thức IP để tìm điểm tới, kể cả là dùng lệnh ping. Mà trong giao thức IP lại luôn có 1 vùng ICMP lưu data nên ta có thể tận dụng package này để truyền data được.
+
+Do ở đây ta gửi đi dạng bytes chỉ là ICMP packet thuần nhưng khi nhận về từ hàm ReceiveFrom thì data lại chứa cả IP header 20 bytes nên phải tách => hay
+
+

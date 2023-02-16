@@ -1,0 +1,11 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<Field
+	Name='DateOpened'
+	DisplayName='Date Opened'
+	Type='DateTime'
+	Format='DateOnly'
+	Required='FALSE'
+>
+	<Default>[today]</Default>
+</Field>
+<Field Name="Picture" ID="{6eeec5fa-ed6f-495d-9622-e5362e6925aa}" DisplayName="Picture" Type="URL" Height="150" Width="224"  Format="Image" />

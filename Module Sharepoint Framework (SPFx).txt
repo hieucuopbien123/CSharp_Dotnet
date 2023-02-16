@@ -1,0 +1,148 @@
+Sharepoint Framework(SPFx): Bao cả PnP Rest API
+
+
+
+# Basic
+Sharepoint của microsoft là hệ thống quản lý tài liệu và cộng tác phổ biến nhất thế giới. 
+Nó dùng để lưu trữ tài liệu và giao tiếp giữa các doanh nghiệp.
+
+-> Chức năng của nó phần lớn liên quan đến communication. Doanh nghiệp có thể dùng nó để tạo ra website. Trang web này được tạo ra rất dễ dàng và tối ưu hóa dùng cho doanh nghiệp. Từ đó có thể tạo ra các trang con cho từng phòng ban cụ thể. Các trang này được liên kết dễ dàng cho team work và stay informed. 
+
+Nch là nó là hệ thống giúp tạo website có tính năng như v. Nó có Sharepoint Server mà khi dùng, organizations có thể deploy và quản lý on-premise (tại máy chủ của riêng họ) hoặc sử dụng Office 365 Enterprise subscription trên cloud
+Sharepoint Server có nhiều tính năng đi kèm hỗ trợ tích hợp nhiều thứ
+
+--> Trong TH ta k dùng onpremise mà subscribe to Microsoft 365 or to standalone Sharepoint Online service, đó là cách dùng hoàn toàn trên cloud. 
+
+Ngày xưa chưa có cloud, họ dùng sharepoint server. Bh có cloud rồi thì họ có nh options hơn. Nếu muốn sự an toàn or muốn thêm feature or function complex có thể dùng Sharepoint server. VD họ có thể custom thêm firewalll or physical solution để bảo vệ data. Nếu k cần như v thì sẽ dùng Sharepoint Online, có continuous release và họ k cần lo thêm về cơ sở hạ tầng. 
+Tương tự như các webserver vật lý thông thường, sharepoint server khi có sự thay đổi sẽ build cả web, còn sharepoint online ta chỉ cần pay for what we use
+
+=> Ta cứ hiểu nó như 1 cái cloud bình thường thôi nhưng có nhiều tính năng hơn: có thể upload docs to sharepoint và access từ bất cứ đâu, share với mọi người(như gg drive); Nó giúp tạo và chia sẻ website(tính năng mà gg drive k có nè); keep từng phien bản document khi thay đổi nó(như github); search;....
+
+
+
+
+# Thao tác với web sharepoint
+-> Components của 1 site sharepoint:
+List Views: là custom view show items quan trọng, filter, sort, permission public hay personal
+Document and libraries: đây là 1 tính năng quan trọng của sharepoint. Nó là nơi lưu trữ files có tính chất versioning. Versioning là khi các phiên bản thay đổi đều được lưu lại và có thể track or restore như github ấy
+Page library: tạo ra pages dựa trên các thông tin về ảnh, Excel, Word, pp, document, video,.. và có thể chia sẻ các page đó ok.
+
+--> Phân biệt 1 site có library or list:
+Library là nói tới 1 set các documents như psd, pdf, words files. Vd đăng các file lên team ấy thì trang đó của Microsoft Team là 1 library
+List là 1 dạng document trong library, nó unstructured. VD: trường age, name là từng item trong 1 list, cấu trúc có thể là số or string
+
+Có nhiều kiểu data type cho nó như number, binary yes/no, date time, image, hyperlink, person or group.
+
+-> Sharepoint tạo ra site có 2 loại
+Team Site: chia sẻ document với mn, họ sẽ cộng tác cùng quản lý thông tin, files, coauthor.
+Communication site: là site mà mn chia sẻ thông tin cho nhau. Ta đăng content lên cho mọi người trong tổ chức để họ được luôn được thông báo khi có sự kiện hay projects, tin tức gì
+
+-> Thao tác với 1 list
+Edit về cột, template, chia sẻ cho người khác trong cùng tổ chức, ẩn hiện cột or site trên thanh navigation, edit item, setting required, edit view và màu cho từng hàng theo điều kiện, viết điều kiện cho column AND OR IF 
+
+Tạo 1 view có tính chất mới dựa vào filter 1 trường ở view khác ok.
+
+Dùng các kiểu khác trong list như: Lookup, Person or Group, Hyperlink, Image, Managed metadata
+Phần web: highlighted content, source, layout
+
+
+
+# SPFx
+Sharepoint Framework là webpart model giúp ta dùng công nghệ và tools để xây dựng ứng dụng responsive dễ dàng. Full support for client side và tích hợp dễ dàng với sharepoint data (thông qua Microsoft Graph).
+
+Sharepoint giống như wordpress. Tức là ta có thể code frontend hoặc dùng giao diện kéo thả đều được. Nó có đầy đủ code editor or tool for building web, hosting. Nó tích hợp nhiều sản phẩm của microsoft và mạnh hơn wordpress nhiều, dùng các list hay data trong site của sharepoint cho web của ta thông qua API được. Ta có thể vào trang web của sharepoint để tạo ra các site. Với sharepoint framework, ta có thể tạo ra các webpart cho sharepoint bằng code.
+
+Sharepoint có thể dùng xd ứng dụng cho Microsoft Team vì có liên kết với nó. 
+Webpart là các component web trong sharepoint
+Ta có thể xây dựng từng cục webpart rời rạc cho customer dùng trong sharepoint site của họ
+Xây dựng các add in cho office, các function cho các tool của microsoft
+
+Có thể kết hợp sharepoint với bất cứ framework frontend nào như React, Angular,..
+Catalog là nơi store webpart, site là nơi test và dùng webpart nhưng thg test trên local first
+
+Các tool SPFx: nodejs, npm, typescript, VSC, build system gulp.js
+
+gulp là task runner giúp tự động hóa nhiều task trong quá trình phát triển web. Na ná webpack nhưng webpack là 1 bundler còn có tác dụng bundle file nữa. Gulp giúp tạo 1 server ảo để phát triển web, có hot reload
+
+-> Cài đặt Sharepoint Framework: 
+npm i gulp yo @microsoft/generator-sharepoint -g -> tạo thư mục -> yo @microsoft/sharepoint -> gulp serve
+=> phiên bản chạy được hiện tại là yo 3.1.1 và gulp 3.9.1 và nodejs v10
+
+Có thể chạy gulp trust-dev-cert để cài self-signed trust certificate để test webpart. 
+Dùng gulp trust-dev-cert nếu gặp vđ với SSL. Vì local webserver dùng để test sử dụng HTTPs mặc định. Nó được implement bằng SSL self-signed certificate nhưng developer env k trust mà phải dùng lệnh này để bảo environment trust cái SSL ta tự sign default đi.
+
+Tức là ta đang tạo ra ứng dụng giúp tạo và test webpart trên local thông qua workbench, khi ta thấy webpart của ta ổn rồi thì có thể deploy webpart đó lên sharepoint online để dùng or deploy lên app catalog để test kiểm thử online.
+Trong trang admin có thể tạo ra site or app catalog thì app catalog dùng để test các webpart và khi ổn r thì deploy dùng nó trong site ok
+
+-> Cấu trúc folder app với React: 
+src: webpart viết bằng Typescript
+config.json: config file cho build. Có thể cấu trúc metadata cho từng webpart trong file config như title, description
+lib: build files từ TS sang JS ready for bundle
+dist: final web ready for distribution
+sharepoint: bản build cuối cùng là .sppkg file dùng cho App Catalog
+team: team site config. Nếu ta k đụng tới team site thì k cần qt folder này
+
+-> Deploy webpart: 
+Khi setup dự án, chọn theo thứ tự yes -> no để deploy được => thực tế phải đọc hiểu có options hỏi có muốn deploy không đó.
+
+Set deployment config trong file config/package-solution.json và config/write-manifests.json => cái file manifests nếu ta muốn deploy lên cdn nào thì ghi ra, k thì chỉ cần serve locally ok với gulp serve --nobrowser. Chỉnh config VD mỗi lần chỉnh sửa ta có 1 version mới thì phải sửa tăng version trong config or chỉnh package name
+gulp clean => clean và xóa temp folder
+(hình như phải chạy gulp build)
+gulp bundle --ship => tạo bundle cho solution
+gulp package-solution --ship => đóng gói webpart thành file .sppkg sẵn sàng cho deploy
+=> Cái option --ship là để package cả các file js css và assets khác. K có --ship, nó mặc định sẽ coi là dùng chế độ debug lấy data từ https 4321, có thì là chế độ production. Ở production, mọi file đều k dược có dấu cách, các file ảnh rất dễ sai phải xóa dấu cách đi. Ở chế độ production, nó tự động lấy data từ sharepoint online. Trong sharepoint online, VD ta thêm ảnh vào list thì nó tạo ra 1 server ảnh trên đó luôn trong document tên "Site Assets"
+
+Tạo app catalog trong sharepoint admin center: thực tế account @avepoint.com của ta là account cá nhân. Trong microsoft nó cho phép 1 nhóm người tạo tk và cái vndevcore2.onmicrosoft.com mới là tk trong nhóm của ta, ở đây ta là 1 thành viên còn admin global chính là người tên vndevcore2 là người tạo ra tk này đuôi này cho ta. Hay nói cách khác khi dùng tk đó, ta chỉ là 1 thành viên trong nhóm và k có quyền tạo ra app catalog mới. Nó được tạo sẵn bởi admin r
+Khi được cấp quyền ta mới có thể upload webpart lên app catalog: https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/serve-your-web-part-in-a-sharepoint-page
+
+Add .sppkg vào app catalog -> add app đó vào sharepoint site -> add phần webpart trong site vào content page
+Có thể test mỗi trên local thôi cũng được, k cần app catalog, r deploy luôn lên sharepoint online site
+
+Muốn xóa add lại thì phải xóa cả ở secondary bin ở cuối trang recycle bin gốc có hiện
+
+-> Thêm 1 webpart mới:
+Tạo folder mới trong src/webpart và chỉnh cấu trúc giống webpart mẫu helloworld, rồi chỉnh config.json thêm cho webpart đó là được
+
+--> Để xóa webpart, xóa trong file config.json và xóa folder 
+
+-> Các thư viện của microsoft tích hợp sẵn.
+VD: @microsoft/sp-lodash-subset có hàm escape để cản user inject input
+
+
+
+# PnP REST API
+Có nhiều bộ công cụ khác nhau:
+PnPjs: open source, client side lib, kiểu dùng nó fetch API nhưng đặc biệt là tương thích với sharepoint, graph, office 365 REST APIs.
+Tương thích với NodeJS, JS project, SPFx. Bên trong nó lại có nhiều tool nhỏ.
+
+-> PnPjs/graph
+Tương tác với data của Microsoft Graph - ứng dụng giúp xây dựng app cho organization và consumer tương tác với hàng triệu người. Có vô số tính năng có thể làm với nó.
+Dùng PnPjs/graph trong sharepoint framework để tương tác với nó. VD gọi hàm fetch API từ SPFx bằng code PnPjs/graph. Microsoft grah chứa hầu hết mọi thông tin có thể lấy từ microsoft 365 như thời gian biểu của 1 người, lịch sử các thứ, tương thích với hầu hết các loại ứng dụng front/back, mọi hđh
+
+Sample API: https://developer.microsoft.com/en-us/graph/graph-explorer
+
+Ta có thể lấy thông tin public của người dùng thông qua API, còn các thông tin private cần có xác nhận của họ.
+
+-> PnPjs/sp (PnPjs/sharepoint)
+Là API thường dùng để gọi vào sharepoint rest service. Vì graph lấy được nhiều thứ của microsoft nhưng khi dùng sharepoint package thì phải dùng cái này để lấy data
+=> ref tơi "Avepoint / homeworktemplate09132022 / Bài 5 và 6"
+
+--> Sử dụng kết hợp SPFx:
+npm i @pnp/sp -save
+
+VD: fetch API lấy data từ 1 list => tạo class dùng sp fetch API => nơi cần dùng khai báo biến class đó và gọi hàm gọi sp lấy data => sp giống axios
+
+Nó kp là 1 sp cụ thể mà có nhiều sp như: Microsoft Graph SDKs, Microsoft Graph Toolkit, PnPjs (phổ biến), PnP Core SDK,...
+
+Có thể dùng 1 file pnpConfig với multiwebpart được.
+Khi didmount ta khởi tạo biến npnjs sp để fetch rồi khi willunmount ta xóa biến đó đi.
+
+-> Fix lỗi cài pnp: xóa dataVersion ở mọi webpart + chỉnh rush-stack-compiler sang v4.2 và chỉnh trong cả file ts.config + disable tslint trong file config gulp => trong trang chủ có chi tiết
+
+scss import bị lỗi: 
+Mỗi lần dùng styles class sẽ tạo ra id riêng cho class ta gán nên có thể gán k sợ trùng, nhưng nó k update cái id đó trực tiếp đôi khi báo k tồn tại => ctrl right click vào styles, nó sẽ tạo file .d module ngầm import đủ mọi thứ trong scss xóa hết lỗi
+
+Nhiều lỗi buộc phải uncomment dataversion -> compile lỗi -> comment lại -> chạy được
+Mỗi lần thêm instance cho _sp phải clean r serve lại
+
+

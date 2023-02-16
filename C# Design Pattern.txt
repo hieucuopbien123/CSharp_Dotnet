@@ -1,0 +1,61 @@
+C#
+
+
+
+# Basic
+ref tới "C# / # Class" và "C# / OOP khác"
+
+-> Inversion of Control (IoC) / Dependency inversion:
+Là kiểu khi lớp này gọi hàm lớp khác, ta k khai báo gọi trực tiếp mà dùng thông qua interface hoặc abstract class. Bất cứ khi nào định gọi hàm lớp khác đều nên làm như v. Khi đó, bất cứ class nào triển khai interface đó đều có thể sử dụng để thay thế.
+Tức trước giờ ta đều làm sai khi gọi trực tiếp tương tác 2 class, chỉ trừ 1 số ít TH có thể gọi hàm trực tiếp thôi.
+
+class A gọi trực tiếp hàm class B. Vd B aggregation nằm trong A chẳng hạn sẽ khiến A và B có phụ thuộc chặt chẽ với nhau. Nếu dùng interface sẽ làm nó phụ thuộc lỏng lẻo hơn sẽ luôn tốt hơn. Kỹ thuật này là 1 phương pháp code rất nhỏ mà được dùng trong nhiều kỹ thuật khác của Design Pattern.
+
+Nguyên lý đảo ngược phụ thuộc: class A dùng trực tiếp class B thì A phụ thuộc vào code trong class B như thế nào. Nhưng khi dùng class A -- interface IB -- class B thì ta viết interface IB theo những gì mà A cần dùng. Rồi class B implements nó tức class B phụ thuộc vào interface IB => Sự phụ thuộc đã bị đảo ngược.
+=> Tức ta viết interface IB theo những gì mà A cần dùng chứ k viết IB theo những hàm mà B đang có. Nên 1 class có thể implement nhiều interface trong đó các interface có trùng hàm nhau.
+
+-> Dependency Injection:
+Cũng là 1 kỹ thuật rất cơ bản kết hợp với IoC để sử dụng trong nhiều kỹ thuật khác. Cũng chỉ là class 1 có thuộc tính là class 2 và khai báo giá trị ở ngoài r truyền vào. Kbh khai báo đối tượng 2 ở trong đối tượng 1 vì nếu đối tượng 2 đổi constructor thì đối tượng 1 lại fix code.
+
+Khi 2 class tương tác với nhau, ta có 2 đối tượng, 1 là user, 2 là dịch vụ(luôn coi là v). Vd user sử dụng 1 dịch vụ thì trong class đối tượng 1 sẽ được tiêm đối tượng 2 vào trong. Vd 2 aggregation tới 1 thông qua:
+- Khai báo giá trị qua constructor
+- Khai báo giá trị qua setter function
+=> Có thể định nghĩa interface cho các hàm setter khi nhiều class cùng dùng dịch vụ đó, rồi cho class implement interface.
+Thg dùng với constructor cho linh hoạt, chỉ dùng setter khi thực sự phải dùng. 
+
+=> DI và IoC thường kết hợp với nhau, tức các dịch vụ sẽ cùng implement 1 interface chung. Bất cứ khi nào 1 class dùng hàm class khác, đều phải nghĩ đến dùng cái này.
+
+--> DI trong ASP.NET: Có nhiều class giúp DI chứ k chỉ các class của ASP.NET 
+Khi triển khai DI trong thực tế, sẽ có 1 trung tâm dịch vụ là DI Container để các dịch vụ đăng ký vào và sử dụng, triển khai rất phức tạp mà ta k implements lại.
+
+Cài package Microsoft.Extensions.DependencyInjection
+
+---> Lớp ServiceCollection:
+****Cơ chế****: Khởi tạo ServiceCollection để đk dv vào -> lấy ra ServiceProvider để dùng dịch vụ
+
+Lúc đk dv vào có ServiceDescriptor lưu thông tin. Thực tế khi sử dụng, ServiceCollection dùng thông tin lưu trong ServiceDescriptor đẻ khởi tạo dịch vụ khi cần. Trong ServiceDescriptor có thuộc tính ServiceLifeTime:
+Scoped: instance của dịch vụ tồn tại trong phạm vi của ServiceScope được tạo ra bởi ServiceProvider.CreateScope
+Singleton: 1 instance dịch vụ tồn tải cho đến hết vòng đời của ServiceProvider
+Transient: mỗi yêu cầu tạo 1 instance dịch vụ mới
+
+Các hàm của ServiceCollection: https://xuanthulab.net/dependency-injection-di-trong-c-voi-servicecollection.html
+
+Nó là 1 cách triển khai pattern factory
+
+---> Đăng ký dịch vụ bằng hàm delegate
+---> Tách thành factory
+
+---> Khởi tạo dịch vụ thông qua Options
+Cài package: Microsoft.Extensions.Options
+
+----> Khởi tạo options lưu trong file riêng
+Cài package Microsoft.Extensions.Configuration và Microsoft.Extensions.Options.ConfigurationExtensions
+Có thể cài package tùy loại file sử dụng. Vd: Microsoft.Extensions.Configuration.Ini cho file ini hay Microsoft.Extensions.Configuration.Xml với file xml
+
+Cũng là cách đọc cấu hình file json
+
+
+
+
+
+

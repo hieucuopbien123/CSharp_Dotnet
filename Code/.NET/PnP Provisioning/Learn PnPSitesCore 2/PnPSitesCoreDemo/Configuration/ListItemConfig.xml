@@ -1,0 +1,282 @@
+﻿<ListItemWrapper>
+	<HomeListItem>
+		<ListItemTest Type="Announcement">
+			<Metadata
+				Title="Tomorrow Healthy Check"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum. gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet"
+				Date="05/1/2021"
+				Image="image_gallery-2.png"
+			></Metadata>
+			<Metadata
+				Title="Air-conditioning is broken"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/1/2021"
+				Image="image_gallery.png"
+			></Metadata>
+			<Metadata
+				Title="Keep Running"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/1/2021"
+				Image="image_gallery-3.png"
+			></Metadata>
+			<Metadata
+				Title="Temperature above 37.3*C need to report"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/1/2021"
+				Image="image_gallery-1.png"
+			></Metadata>
+			<Metadata
+				Title="New Learning System is Live"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum"
+				Date="05/Jan/2021"
+				Image="image_gallery-2.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/Jan/2021"
+				Image="image_gallery-1.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/Jan/2021"
+				Image="image_gallery-2.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/Jan/2021"
+				Image="image_gallery-3.png"
+			></Metadata>
+			<Metadata
+				Title="New Learning System is Live"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum."
+				Date="05/1/2021"
+				Image="image_gallery.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="05/1/2021"
+				Image="image_gallery-2.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo"
+				Date="02/1/2021"
+				Image="image_gallery-2.png"
+			></Metadata>
+		</ListItemTest>
+		<ListItemTest Type="EventsForHw5">
+			<Metadata
+				Day="01"
+				Title="Register Portal"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="02"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="03"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="04"
+				Title="Register Portal"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="04"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="05"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="06"
+				Title="Register Portal"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="07"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="08"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+			<Metadata
+				Day="08"
+				Title="IT Maintenance"
+				Time="09:00 AM - 09:30 AM"
+			></Metadata>
+		</ListItemTest>
+		<ListItemTest Type="HowDoI">
+			<Metadata
+				Answer="Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae debitis nulla aperiam voluptates similique at distinctio quo ab! Consectetur illo rerum ad, neque quis aliquid voluptatibus vitae eum quas natus tempora quasi voluptatum, hic ut officia, culpa qui iure alias? Iste voluptate amet asperiores fuga corporis. Odit ipsam dolores quod cupiditate consequuntur adipisci maxime sapiente iure saepe voluptatem suscipit, vero sit minima, optio dolorum consequatur cumque ullam animi eos enim. Molestiae aliquam, fugit, ullam non error rem sapiente ipsa, corrupti ut asperiores architecto perferendis officiis modi! Tenetur molestiae et at doloremque natus, saepe cumque reprehenderit vel inventore nihil asperiores voluptatem."
+				Question="Why, in general, do women live longer than men do?"
+			></Metadata>
+			<Metadata
+				Answer="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+				Question="Is this a long question or this is just a short question?"
+			></Metadata>
+			<Metadata
+				Answer="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut aliqubore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut ip ex."
+				Question="How to access data?"
+			></Metadata>
+			<Metadata
+				Answer="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut aliqubore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiu."
+				Question="How can I do it?"
+			></Metadata>
+			<Metadata
+				Answer="Learn your self."
+				Question="How to learn?"
+			></Metadata>
+			<Metadata
+				Answer="Follow this tut."
+				Question="How to use React?"
+			></Metadata>
+			<Metadata
+				Answer="Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut aliqubore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut ip ex."
+				Question="How to learn React?"
+			></Metadata>
+			<Metadata
+				Answer="Quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut aliqubore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis uis nostrud exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut ip ex."
+				Question="What is Sharepoint?"
+			></Metadata>
+			<Metadata
+				Answer="Exercitation ullamco laboris nisiut aliquip ex uis nostrud exercitation ullamco laboris nisiut ip ex."
+				Question="Is this for testing?"
+			></Metadata>
+		</ListItemTest>
+		<ListItemTest Type="ImageGallery">
+			<Metadata
+				Image="Mask Group -1.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 2.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -3.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -4.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -5.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -6.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 1.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 2.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -6.png"
+			></Metadata>
+		</ListItemTest>
+		<ListItemTest Type="News">
+			<Metadata
+				Title="New Learning System is Live"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum."
+				Date="05/01/2021"
+				Image="Mask Group 1.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo."
+				Date="02/01/2021"
+				Image="Mask Group -1.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo."
+				Date="05/01/2021"
+				Image="Mask Group 2.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum."
+				Date="02/01/2021"
+				Image="Mask Group -2.png"
+			></Metadata>
+			<Metadata
+				Title="New Learning System is Live"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum."
+				Date="05/01/2021"
+				Image="Mask Group -3.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo."
+				Date="05/01/2021"
+				Image="Mask Group -4.png"
+			></Metadata>
+			<Metadata
+				Title="New Learning System is Live"
+				Description="New Wellness Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo d ea rebum."
+				Date="02/01/2021"
+				Image="Mask Group -5.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo."
+				Date="05/01/2021"
+				Image="Mask Group -6.png"
+			></Metadata>
+			<Metadata
+				Title="IT Maintenance"
+				Description="Lorem ipsum dolor sit amet, consetetur sadipscing elitrinvidunt ut labore et dolore aaliquya erat, sed diam voluptuaaa vero eos et accusam et justo duo."
+				Date="02/01/2021"
+				Image="Mask Group -5.png"
+			></Metadata>
+		</ListItemTest>
+		<ListItemTest Type="VideoGallery">
+			<Metadata
+				Image="video.png"
+			></Metadata>
+			<Metadata
+				Image="video-1.png"
+			></Metadata>
+			<Metadata
+				Image="video-2.png"
+			></Metadata>
+			<Metadata
+				Image="video-3.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -5.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -6.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 1.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 2.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group -6.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 1.png"
+			></Metadata>
+			<Metadata
+				Image="Mask Group 2.png"
+			></Metadata>
+		</ListItemTest>
+	</HomeListItem>
+</ListItemWrapper>

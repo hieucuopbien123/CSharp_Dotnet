@@ -1,0 +1,33 @@
+﻿using Common;
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+namespace Client
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Title = "Client";
+            while (true)
+            {
+                Console.Write("Press enter to send ... ");
+                Console.ReadLine();
+                var student = new Student
+                {
+                    Id = 1,
+                    FirstName = "Nguyen Van",
+                    LastName = "A",
+                    DateOfBirth = new DateTime(1990, 12, 30)
+                };
+                var client = new TcpClient();
+                client.Connect(IPAddress.Loopback, 1308);
+                var stream = client.GetStream();
+                // StreamWriter viết string còn binary writer viết bytes
+                var writer = new StreamWriter(stream) { AutoFlush = true };
+                writer.WriteLine(TextSerializer.Serialize(student));
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+DotNet
+Mặc định dùng .NET Core, .NET Framework, .NET Universal
+
+Làm việc với cloud thì dùng .NET core vì dùng docker, CICD process hiện đại
+Làm việc với sharepoint dùng .NET framework vì nhiều function .NET core k hỗ trợ
+
+Viết cả các framework JS chuyên dùng để code cho Sharepoint và Team
+
+
+
+# Basic
+
+
+
+# Sharepoint Framework: chứa cả PnP Rest API
+
+
+
+## PnP Provisioning
+# PnP Core CSOM (Sharepoint CSOM)
+# PnP Site Core
+# PnP Core SDK
+
+
+
+# ASP.NET
+# Entity Framework
+
+
+
+# Other
+
+

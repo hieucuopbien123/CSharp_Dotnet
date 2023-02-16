@@ -1,0 +1,11 @@
+﻿<Elements>
+	<HomeElements>
+		<SiteColumnModule>
+			<Field Type="Choice" Name='ACSCategory' DisplayName='Category' OverWrite='false' Choice='Enter Choice #1' DefaultChoice='Enter Choice #1'>
+				<Choice Value='Enter Choice #1'></Choice>
+				<Choice Value='Enter Choice #2'></Choice>
+				<Choice Value='Enter Choice #3'></Choice>
+			</Field>
+		</SiteColumnModule>
+	</HomeElements>
+</Elements>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <sites>
+    <!--Information Technology-->
+    <site url="https://curecorona.sharepoint.com/sites/SPFxTraining">
+      <pages>
+        <page title="Home" fileName="Home.aspx">
+          <webparts>
+            <webpart sectinType="OneColumn" isDefault="true" title="DocumentLibrary">
+              <![CDATA[{"isDocumentLibrary":true,"selectedListId":"2ad52df2-2f07-4166-96df-a395bbd3f404",
+              "listTitle":"Document Library","selectedListUrl":"$ServerRelativeUrl/Shared Documents",
+              "webRelativeListUrl":"/Shared Documents","webpartHeightKey":4}]]>
+            </webpart>
+          </webparts>
+        </page>
+      </pages>
+    </site>
+  </sites>
+</configuration>
